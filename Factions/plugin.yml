@@ -1,0 +1,8 @@
+name: Factions
+main: me.iran.factions.Factions
+version: 1.0
+softdepend: [Vault]
+commands:
+  team:
+    description: create a team
+    aliases: [t]
