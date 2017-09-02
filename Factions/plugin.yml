@@ -5,7 +5,8 @@ softdepend: [Vault]
 commands:
   team:
     description: create a team
-    aliases: [t]
+    aliases: [t,f, faction]
   systemfaction:
+    aliases: [sys, sf]
     description: create a system factions
     
