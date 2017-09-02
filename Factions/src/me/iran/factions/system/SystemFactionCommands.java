@@ -28,27 +28,53 @@ public class SystemFactionCommands implements CommandExecutor {
 		if(cmd.getName().equalsIgnoreCase("systemfaction")) {
 			
 			if(args.length < 1) {
-				//send msg
+				player.sendMessage(ChatColor.RED + "/systemfaction create <name>");
+				player.sendMessage(ChatColor.RED + "/systemfaction claim <name>");
+				player.sendMessage(ChatColor.RED + "/systemfaction deathban <name>");
 				return true;
 			}
 			
 			if(args[0].equalsIgnoreCase("create")) {
 				if(args.length < 2) {
-					//send msg
+					player.sendMessage(ChatColor.RED + "/systemfaction create <name>");
 					return true;
 				}
 				
 				SystemFactionManager.getManager().createFaction(player, args[1]);
 			}
 			
-			if(args[0].equalsIgnoreCase("claim")) {
+			if(args[0].equalsIgnoreCase("deathban")) {
 				if(args.length < 2) {
-					//send msg
+					player.sendMessage(ChatColor.RED + "/systemfaction deathban <name>");
 					return true;
 				}
 				
 				if(!SystemFactionManager.getManager().doesFactionExist(args[1])) {
-					//send msg
+					player.sendMessage(ChatColor.RED + "Couldn't find that faction");
+					return true;
+				}
+				
+				SystemFaction faction = SystemFactionManager.getManager().getFactionByName(args[1]);
+				
+				if(faction.isDeathban()) {
+					faction.setDeathban(false);
+					player.sendMessage(ChatColor.GREEN + "Deathban is now disabled at " + faction.getName());
+				} else {
+					faction.setDeathban(true);
+					player.sendMessage(ChatColor.RED + "Deathban is now enabled at " + faction.getName());
+				}
+				
+				
+			}
+			
+			if(args[0].equalsIgnoreCase("claim")) {
+				if(args.length < 2) {
+					player.sendMessage(ChatColor.RED + "/systemfaction claim <name>");
+					return true;
+				}
+				
+				if(!SystemFactionManager.getManager().doesFactionExist(args[1])) {
+					player.sendMessage(ChatColor.RED + "Couldn't find that faction");
 					return true;
 				}
 				
@@ -67,6 +93,7 @@ public class SystemFactionCommands implements CommandExecutor {
 				wand.setItemMeta(wMeta);
 				
 				player.getInventory().addItem(wand);
+				player.sendMessage(ChatColor.RED + "Now claiming for " + args[1]);
 			}
 			
 		}
