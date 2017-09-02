@@ -9,6 +9,8 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import me.iran.factions.Factions;
+import me.iran.factions.system.SystemFaction;
+import me.iran.factions.system.SystemFactionManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -997,6 +999,27 @@ public class FactionManager {
 				}
 			}
 		}
+		
+		for(SystemFaction faction : SystemFactionManager.getManager().getAllFactions()) {
+			
+			if(faction.getLoc1() != null && faction.getLoc2() != null) {
+				Location loc1 = faction.getLoc1();
+				Location loc2 = faction.getLoc2();
+				
+
+				int xMax = Math.max(loc1.getBlockX(), loc2.getBlockX());
+				int zMax = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
+
+				int xMin = Math.min(loc1.getBlockX(), loc2.getBlockX());
+				int zMin = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
+
+				if ((loc.getBlockX() >= xMin) && (loc.getBlockX() <= xMax)) {
+					if ((loc.getBlockZ() >= zMin) && (loc.getBlockZ() <= zMax)) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 	
@@ -1051,7 +1074,7 @@ public class FactionManager {
 				for(int i = facMin_x; i < facMax_x + 1; i++) {
 					for(int j = facMin_z; j < facMax_z + 1; j++) {
 						//for(int k = 0; k < 256; k++) {
-							Location loc = new Location(Bukkit.getWorld("world"), i, 0, j);
+							Location loc = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), i, 0, j);
 							
 							//System.out.println("x:" + loc.getBlockX() + " y:" + loc.getBlockY() + " z:" + loc.getBlockZ());
 							
@@ -1066,11 +1089,50 @@ public class FactionManager {
 				}
 			}
 			
-			return true;
+		}
+		
+
+		for(SystemFaction faction : SystemFactionManager.getManager().getAllFactions()) {
+			
+			if(faction.getLoc1() != null & faction.getLoc2() != null) {
+				Location facLoc1 = faction.getLoc1();
+				Location facLoc2 = faction.getLoc2();
+				
+				//Faction values
+				int facMax_x = Math.max(facLoc1.getBlockX(), facLoc2.getBlockX());
+				int facMin_x = Math.min(facLoc1.getBlockX(), facLoc2.getBlockX());
+				
+				int facMax_z = Math.max(facLoc1.getBlockZ(), facLoc2.getBlockZ());
+				int facMin_z = Math.min(facLoc1.getBlockZ(), facLoc2.getBlockZ());
+				
+				//Claim values
+				int locMax_x = Math.max(loc1.getBlockX(), loc2.getBlockX());
+				int locMin_x = Math.min(loc1.getBlockX(), loc2.getBlockX());
+				
+				int locMax_z = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
+				int locMin_z = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
+				
+				for(int i = facMin_x; i < facMax_x + 1; i++) {
+					for(int j = facMin_z; j < facMax_z + 1; j++) {
+						//for(int k = 0; k < 256; k++) {
+							Location loc = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), i, 0, j);
+							
+							//System.out.println("x:" + loc.getBlockX() + " y:" + loc.getBlockY() + " z:" + loc.getBlockZ());
+							
+							if((loc.getBlockX() <= locMax_x) && (loc.getBlockX() >= locMin_x)) {
+								if((loc.getBlockZ() <= locMax_z) && (loc.getBlockZ() >= locMin_z)) {
+									return false;
+								}
+							}
+							
+						//}
+					}
+				}
+			}
 			
 		}
 		
-		return false;
+		return true;
 	}
 	
 	@SuppressWarnings("deprecation")

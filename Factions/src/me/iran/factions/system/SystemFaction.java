@@ -14,7 +14,7 @@ public class SystemFaction {
 	
 	private Location home;
 	
-	private boolean deathban;
+	private boolean deathban = true;
 	
 	private ChatColor color;
 
@@ -23,8 +23,6 @@ public class SystemFaction {
 		this.name = name;
 		
 		this.setMotd("Plugin created by Irantwomiles");
-		
-		this.deathban = true;
 		
 		setColor(ChatColor.AQUA);
 	}

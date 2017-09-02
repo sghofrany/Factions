@@ -19,12 +19,14 @@ import me.iran.factions.listeners.InteractWithItemsInClaim;
 import me.iran.factions.listeners.MoveWhileTeleporting;
 import me.iran.factions.listeners.PlaceItemsInClaim;
 import me.iran.factions.listeners.PlayerConnectionEvents;
+import me.iran.factions.system.SystemClaimEvent;
+import me.iran.factions.system.SystemFactionCommands;
+import me.iran.factions.system.SystemFactionManager;
 import net.milkbowl.vault.economy.Economy;
 
 public class Factions extends JavaPlugin {
 
 	File file = null;
-	File fFile = null;
 	
 	public static Factions instance;
 	
@@ -51,32 +53,54 @@ public class Factions extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new MoveWhileTeleporting(this), this);
 		Bukkit.getPluginManager().registerEvents(new InteractWithItemsInClaim(this), this);
 		Bukkit.getPluginManager().registerEvents(new FactionChat(this), this);
+		Bukkit.getPluginManager().registerEvents(new SystemClaimEvent(), this);
 		
 		run.runTaskTimer(this, 0, 20L);
 		
-		file = new File(this.getDataFolder(), "factions.yml");
-		
-		fFile = new File(this.getDataFolder() + "/Factions");
+		file = new File(this.getDataFolder() + "/Factions");
 
-		if (!fFile.exists()) {
+		if (!file.exists()) {
 			System.out.println("[Factions] Couldn't Find any factions");
 			file.mkdir();
-			fFile = new File(this.getDataFolder() + "/Factions", "deleteme.yml");
+			file = new File(this.getDataFolder() + "/Factions", "deleteme.yml");
 			new YamlConfiguration();
 
 			YamlConfiguration delete = YamlConfiguration
-					.loadConfiguration(fFile);
+					.loadConfiguration(file);
 			delete.createSection("Delete");
 
 			delete.set("Delete", "Delete this file, but leave the folder!");
 			try {
-				delete.save(fFile);
+				delete.save(file);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			System.out.println("[Factions] Created the directory 'Factions' with no errors!");
 		}
 
+		file = new File(this.getDataFolder() + "/SysFactions");
+
+		if (!file.exists()) {
+			System.out.println("[Factions] Couldn't Find any factions");
+			file.mkdir();
+			file = new File(this.getDataFolder() + "/SysFactions", "deleteme.yml");
+			new YamlConfiguration();
+
+			YamlConfiguration delete = YamlConfiguration
+					.loadConfiguration(file);
+			delete.createSection("Delete");
+
+			delete.set("Delete", "Delete this file, but leave the folder!");
+			try {
+				delete.save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("[Factions] Created the directory 'Factions' with no errors!");
+		}
+		
+		file = new File(this.getDataFolder(), "factions.yml");
+		
 		if (!file.exists()) {
 			
 			file = new File(this.getDataFolder(), "factions.yml");
@@ -96,9 +120,33 @@ public class Factions extends JavaPlugin {
 			System.out.println("Created factions.yml");
 		}
 		
+		file = new File(this.getDataFolder(), "factions.yml");
+		
+		if (!file.exists()) {
+			
+			file = new File(this.getDataFolder(), "sysfactions.yml");
+
+			new YamlConfiguration();
+
+			YamlConfiguration config = YamlConfiguration
+					.loadConfiguration(file);
+
+			config.createSection("factions");
+			try {
+				config.save(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println("Created sysfactions.yml");
+		}
+		
 		FactionManager.getManager().loadFactions();
 		
+		SystemFactionManager.getManager().loadFactions();
+		
 		getCommand("team").setExecutor(new FactionCommands(this));
+		getCommand("systemfaction").setExecutor(new SystemFactionCommands());
 		//getCommand("factionadmin").setExecutor(new FactionAdminCommands(this));
 
 		getConfig().options().copyDefaults(true);
@@ -108,6 +156,7 @@ public class Factions extends JavaPlugin {
 	
 	public void onDisable() {
 		FactionManager.getManager().saveFactions();
+		SystemFactionManager.getManager().saveFactions();
 	}
 
     private boolean setupEconomy()

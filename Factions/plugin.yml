@@ -6,3 +6,6 @@ commands:
   team:
     description: create a team
     aliases: [t]
+  systemfaction:
+    description: create a system factions
+    

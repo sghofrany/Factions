@@ -111,8 +111,6 @@ public class SystemFactionManager {
 
 		if (fFile.exists()) {
 
-			fFile = new File(Factions.getInstance().getDataFolder(), "sysfactions.yml");
-
 			YamlConfiguration listConfig = YamlConfiguration.loadConfiguration(fFile);
 
 			List<String> f = listConfig.getStringList("factions");
@@ -151,7 +149,8 @@ public class SystemFactionManager {
 
 					facConfig.set("factions." + name + ".name", faction.getName());
 					facConfig.set("factions." + name + ".motd", faction.getMotd());
-
+					facConfig.set("factions." + name + ".deathban", faction.isDeathban());
+					
 					if (faction.getLoc1() != null) {
 						facConfig.createSection("factions." + name + ".loc1.x");
 						facConfig.createSection("factions." + name + ".loc1.z");
@@ -236,6 +235,28 @@ public class SystemFactionManager {
 
 			// clear current list
 			
+		} else {
+			
+			fFile = new File(Factions.getInstance().getDataFolder(), "sysfactions.yml");
+
+			YamlConfiguration listConfig = YamlConfiguration.loadConfiguration(fFile);
+			
+			listConfig.createSection("factions"); 
+			
+			List<String> list = new ArrayList<>();
+			
+			for(SystemFaction fac : factions) {
+				list.add(fac.getName());
+			}
+			
+			listConfig.set("factions", list);
+			
+			try {
+				listConfig.save(fFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -268,6 +289,10 @@ public class SystemFactionManager {
 			}
 		}
 		return false;
+	}
+	
+	public ArrayList<SystemFaction> getAllFactions() {
+		return factions;
 	}
 	
 }
