@@ -10,9 +10,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.iran.factions.Factions;
 import me.iran.factions.customlisteners.EnterClaimEvent;
+import me.iran.factions.customlisteners.EnterSystemFactionEvent;
 import me.iran.factions.customlisteners.LeaveClaimEvent;
+import me.iran.factions.customlisteners.LeaveSystemFactionEvent;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
+import me.iran.factions.system.SystemFactionManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class EnteringClaim implements Listener {
@@ -32,6 +35,10 @@ public class EnteringClaim implements Listener {
 			Bukkit.getServer().getPluginManager().callEvent(new EnterClaimEvent(player, FactionManager.getManager().getClaimByLocation(event.getTo())));
 		}
 
+		if(!SystemFactionManager.getManager().isInsideClaim(event.getFrom()) && SystemFactionManager.getManager().isInsideClaim(event.getTo())) {
+			Bukkit.getServer().getPluginManager().callEvent(new EnterSystemFactionEvent(player, SystemFactionManager.getManager().getFactionByLocation(event.getTo())));
+		}
+		
 	}
 
 	@EventHandler
@@ -43,10 +50,38 @@ public class EnteringClaim implements Listener {
 			Bukkit.getServer().getPluginManager().callEvent(new LeaveClaimEvent(player, FactionManager.getManager().getClaimByLocation(event.getFrom())));
 		}
 		
+		if(SystemFactionManager.getManager().isInsideClaim(event.getFrom()) && !SystemFactionManager.getManager().isInsideClaim(event.getTo())) {
+			Bukkit.getServer().getPluginManager().callEvent(new LeaveSystemFactionEvent(player, SystemFactionManager.getManager().getFactionByLocation(event.getFrom())));
+		}
+		
 	}
 	
 	@EventHandler
-	public void enterClaim(EnterClaimEvent event) {
+	public void enterSystemClaim(EnterSystemFactionEvent event) {
+		Player player = event.getPlayer();
+		
+		if(event.getFaction().isDeathban()) {
+			player.sendMessage(ChatColor.YELLOW + "Entering " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.RED + "Deathban" + ChatColor.GRAY + ")");
+		} else {
+			player.sendMessage(ChatColor.YELLOW + "Entering " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.GREEN + "Safezone" + ChatColor.GRAY + ")");
+		}
+		
+	}
+	
+	@EventHandler
+	public void leaveSystemClaim(LeaveSystemFactionEvent event) {
+		Player player = event.getPlayer();
+		
+		if(event.getFaction().isDeathban()) {
+			player.sendMessage(ChatColor.YELLOW + "Leaving " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.RED + "Deathban" + ChatColor.GRAY + ")");
+		} else {
+			player.sendMessage(ChatColor.YELLOW + "Leaving " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.GREEN + "Safezone" + ChatColor.GRAY + ")");
+		}
+		
+	}
+	
+	@EventHandler
+	public void enterFactionClaim(EnterClaimEvent event) {
 		
 		Player player = event.getPlayer();
 		
@@ -69,7 +104,7 @@ public class EnteringClaim implements Listener {
 	}
 	
 	@EventHandler
-	public void leaveClaim(LeaveClaimEvent event) {
+	public void leaveFactionClaim(LeaveClaimEvent event) {
 		
 		Player player = event.getPlayer();
 		

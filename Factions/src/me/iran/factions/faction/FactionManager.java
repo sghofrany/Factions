@@ -1000,26 +1000,6 @@ public class FactionManager {
 			}
 		}
 		
-		for(SystemFaction faction : SystemFactionManager.getManager().getAllFactions()) {
-			
-			if(faction.getLoc1() != null && faction.getLoc2() != null) {
-				Location loc1 = faction.getLoc1();
-				Location loc2 = faction.getLoc2();
-				
-
-				int xMax = Math.max(loc1.getBlockX(), loc2.getBlockX());
-				int zMax = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
-
-				int xMin = Math.min(loc1.getBlockX(), loc2.getBlockX());
-				int zMin = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
-
-				if ((loc.getBlockX() >= xMin) && (loc.getBlockX() <= xMax)) {
-					if ((loc.getBlockZ() >= zMin) && (loc.getBlockZ() <= zMax)) {
-						return true;
-					}
-				}
-			}
-		}
 		return false;
 	}
 	
