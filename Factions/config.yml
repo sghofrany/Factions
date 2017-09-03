@@ -1,5 +1,8 @@
 faction-limit: 30
 faction-world: 'world'
+pvp-timer: 60
+pvp-timer-message-hit: '&d%player% has tagged you for %timer%'
+pvp-timer-message-damager: '&4you have tagged %player% has tagged you for %timer%'
 invaild-characters: '&cCant use those characters in your faction name'
 name-length: '&cYour faction name must be between 3 - 12 characters'
 faction-exists: '&cA faction by that name already exists'
@@ -22,6 +25,9 @@ enter-warzone: '&eYou have entered &a&l%faction% &7(&cDeathban&7)'
 leave-safezone: '&eYou have left &a&l%faction% &7(&aSafezone&7)'
 leave-warzone: '&eYou have left &a&l%faction% &7(&cDeathban&7)'
 death-message: '&4&l%player% &chas died &7(&6%dtr%&7)'
+same-faction: '&cCant hit &e%player% &cbecause you are in the same faction'
+other-inside-safezone: '&c%player% &eis inside a no PvP zone'
+self-inside-safezone: '&cCant hit %player% while inside safezone'
 interact-in-claim:
   - CHEST
   - ENDER_CHEST

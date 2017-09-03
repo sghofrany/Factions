@@ -20,6 +20,7 @@ import me.iran.factions.listeners.InteractWithItemsInClaim;
 import me.iran.factions.listeners.MoveWhileTeleporting;
 import me.iran.factions.listeners.PlaceItemsInClaim;
 import me.iran.factions.listeners.PlayerConnectionEvents;
+import me.iran.factions.listeners.PvPTimer;
 import me.iran.factions.system.SystemClaimEvent;
 import me.iran.factions.system.SystemFactionCommands;
 import me.iran.factions.system.SystemFactionManager;
@@ -55,6 +56,7 @@ public class Factions extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new InteractWithItemsInClaim(this), this);
 		Bukkit.getPluginManager().registerEvents(new FactionChat(this), this);
 		Bukkit.getPluginManager().registerEvents(new SystemClaimEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new PvPTimer(), this);
 		
 		run.runTaskTimer(this, 0, 20L);
 		

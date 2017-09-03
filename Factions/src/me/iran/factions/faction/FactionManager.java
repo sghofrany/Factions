@@ -1083,18 +1083,13 @@ public class FactionManager {
 				
 				for(int i = facMin_x; i < facMax_x + 1; i++) {
 					for(int j = facMin_z; j < facMax_z + 1; j++) {
-						//for(int k = 0; k < 256; k++) {
 							Location loc = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), i, 0, j);
-							
-							//System.out.println("x:" + loc.getBlockX() + " y:" + loc.getBlockY() + " z:" + loc.getBlockZ());
-							
 							if((loc.getBlockX() <= locMax_x) && (loc.getBlockX() >= locMin_x)) {
 								if((loc.getBlockZ() <= locMax_z) && (loc.getBlockZ() >= locMin_z)) {
 									return false;
 								}
 							}
 							
-						//}
 					}
 				}
 			}
@@ -1102,6 +1097,17 @@ public class FactionManager {
 		}
 		
 		return true;
+	}
+	
+	public boolean isSameFaction(Player player1, Player player2) {
+		
+		if(isPlayerInFaction(player1) && isPlayerInFaction(player2)) {
+			if(getFactionByPlayer(player1).getName().equalsIgnoreCase(getFactionByPlayer(player2).getName())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	@SuppressWarnings("deprecation")
