@@ -1,7 +1,5 @@
 package me.iran.factions.listeners;
 
-import java.text.DecimalFormat;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,15 +14,12 @@ import me.iran.factions.customlisteners.LeaveSystemFactionEvent;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
 import me.iran.factions.system.SystemFactionManager;
+import me.iran.factions.utils.Utils;
 import net.md_5.bungee.api.ChatColor;
 
 public class EnteringClaim implements Listener {
 
-	Factions plugin;
-
-	public EnteringClaim (Factions plugin) {
-		this.plugin = plugin;
-	}
+	private Utils utils = new Utils();
 	
 	@EventHandler
 	public void onEnter(PlayerMoveEvent event) {
@@ -96,16 +91,16 @@ public class EnteringClaim implements Listener {
 			if(faction.getName().equalsIgnoreCase(event.getFaction().getName())) {
 				
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-friendly-claim")
-						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+						.replace("%dtr%", utils.formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 				
 			} else {
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-enemy-claim")
-						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+						.replace("%dtr%", utils.formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 			}
 			
 		} else {
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-enemy-claim")
-					.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+					.replace("%dtr%", utils.formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 	}
 		
 	}
@@ -122,25 +117,18 @@ public class EnteringClaim implements Listener {
 			if(faction.getName().equalsIgnoreCase(event.getFaction().getName())) {
 				
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-friendly-claim")
-						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+						.replace("%dtr%", utils.formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 			
 			} else {
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-enemy-claim")
-						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+						.replace("%dtr%", utils.formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 			}
 			
 		} else {
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-enemy-claim")
-					.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+					.replace("%dtr%", utils.formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 		}
 		
 	}
-	
-	public static String formatDouble(double db) {
-		DecimalFormat f = new DecimalFormat("#0.00");
-		
-		return f.format(db);
-	}
-	
 	
 }

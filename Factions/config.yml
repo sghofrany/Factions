@@ -21,6 +21,7 @@ enter-safezone: '&eYou have entered &a&l%faction% &7(&aSafezone&7)'
 enter-warzone: '&eYou have entered &a&l%faction% &7(&cDeathban&7)'
 leave-safezone: '&eYou have left &a&l%faction% &7(&aSafezone&7)'
 leave-warzone: '&eYou have left &a&l%faction% &7(&cDeathban&7)'
+death-message: '&4&l%player% &chas died &7(&6%dtr%&7)'
 interact-in-claim:
   - CHEST
   - ENDER_CHEST

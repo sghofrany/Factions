@@ -46,7 +46,7 @@ public class FactionCommands implements CommandExecutor {
 		
 		Player player = (Player) sender;
 		
-		if(cmd.getName().equalsIgnoreCase("team")) {
+		if(cmd.getName().equalsIgnoreCase("faction")) {
 			
 			if(args.length < 1) {
 				
@@ -54,29 +54,29 @@ public class FactionCommands implements CommandExecutor {
 				player.sendMessage(ChatColor.GOLD.toString() + ChatColor.STRIKETHROUGH + "-= " + ChatColor.GOLD + "Team Commands" + ChatColor.GOLD.toString() + ChatColor.STRIKETHROUGH + "=-");
 				player.sendMessage(ChatColor.YELLOW + "");
 				player.sendMessage(ChatColor.RED + "Team Captain Commands");
-				player.sendMessage(ChatColor.YELLOW + "/team create <name>");
-				player.sendMessage(ChatColor.YELLOW + "/team disband");
-				player.sendMessage(ChatColor.YELLOW + "/team invite <player>");
-				player.sendMessage(ChatColor.YELLOW + "/team revoke <player>");
-				player.sendMessage(ChatColor.YELLOW + "/team kick <player>");
-				player.sendMessage(ChatColor.YELLOW + "/team leader <player>");
-				player.sendMessage(ChatColor.YELLOW + "/team promote <player>");
-				player.sendMessage(ChatColor.YELLOW + "/team demote <player>");
-				player.sendMessage(ChatColor.YELLOW + "/team claim");
-				player.sendMessage(ChatColor.YELLOW + "/team withdraw <amount>");
-				player.sendMessage(ChatColor.YELLOW + "/team sethome");
-				player.sendMessage(ChatColor.YELLOW + "/team announce <message>");
+				player.sendMessage(ChatColor.YELLOW + "/f create <name>");
+				player.sendMessage(ChatColor.YELLOW + "/f disband");
+				player.sendMessage(ChatColor.YELLOW + "/f invite <player>");
+				player.sendMessage(ChatColor.YELLOW + "/f revoke <player>");
+				player.sendMessage(ChatColor.YELLOW + "/f kick <player>");
+				player.sendMessage(ChatColor.YELLOW + "/f leader <player>");
+				player.sendMessage(ChatColor.YELLOW + "/f promote <player>");
+				player.sendMessage(ChatColor.YELLOW + "/f demote <player>");
+				player.sendMessage(ChatColor.YELLOW + "/f claim");
+				player.sendMessage(ChatColor.YELLOW + "/f withdraw <amount>");
+				player.sendMessage(ChatColor.YELLOW + "/f sethome");
+				player.sendMessage(ChatColor.YELLOW + "/f announce <message>");
 				player.sendMessage(ChatColor.YELLOW + "");
 				player.sendMessage(ChatColor.DARK_GRAY + "Team Member Commands");
-				player.sendMessage(ChatColor.GRAY + "/team join <team>");
-				player.sendMessage(ChatColor.GRAY + "/team leave");
-				player.sendMessage(ChatColor.GRAY + "/team chat");
-				player.sendMessage(ChatColor.GRAY + "/team join <team>");
-				player.sendMessage(ChatColor.GRAY + "/team who <team>");
-				player.sendMessage(ChatColor.GRAY + "/team map");
-				player.sendMessage(ChatColor.GRAY + "/team balance");
-				player.sendMessage(ChatColor.GRAY + "/team deposit <amount>");
-				player.sendMessage(ChatColor.GRAY + "/team home ");
+				player.sendMessage(ChatColor.GRAY + "/f join <f>");
+				player.sendMessage(ChatColor.GRAY + "/f leave");
+				player.sendMessage(ChatColor.GRAY + "/f chat");
+				player.sendMessage(ChatColor.GRAY + "/f join <f>");
+				player.sendMessage(ChatColor.GRAY + "/f who <f>");
+				player.sendMessage(ChatColor.GRAY + "/f map");
+				player.sendMessage(ChatColor.GRAY + "/f balance");
+				player.sendMessage(ChatColor.GRAY + "/f deposit <amount>");
+				player.sendMessage(ChatColor.GRAY + "/f home ");
 				player.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "--------------------------------------------------");
 				
 				return true;
@@ -85,7 +85,7 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("create")) {
 				
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t create [name]");
+					player.sendMessage(ChatColor.GOLD + "/f create [name]");
 					return true;
 				}
 				
@@ -99,7 +99,7 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("invite")) {
 				
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t invite [player]");
+					player.sendMessage(ChatColor.GOLD + "/f invite [player]");
 					return true;
 				}
 				
@@ -111,7 +111,7 @@ public class FactionCommands implements CommandExecutor {
 				}
 				
 				if(target == player) {
-					player.sendMessage(ChatColor.RED + "You can't invite yourself to a team");
+					player.sendMessage(ChatColor.RED + "You can't invite yourself to a faction");
 					return true;
 				}
 				
@@ -121,7 +121,7 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("revoke") || args[0].equalsIgnoreCase("uninvite")) {
 				
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t revoke [player]");
+					player.sendMessage(ChatColor.GOLD + "/f revoke|uninvite [player]");
 					return true;
 				}
 				
@@ -142,7 +142,7 @@ public class FactionCommands implements CommandExecutor {
 			
 			if(args[0].equalsIgnoreCase("join")) {
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t join [team]");
+					player.sendMessage(ChatColor.GOLD + "/f join [team]");
 					return true;
 				}
 				
@@ -156,7 +156,7 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("kick")) {
 				
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t kick [player]");
+					player.sendMessage(ChatColor.GOLD + "/f kick [player]");
 					return true;
 				}
 				
@@ -178,7 +178,7 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("leader")) {
 				
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t leader [player]");
+					player.sendMessage(ChatColor.GOLD + "/f leader [player]");
 					return true;
 				}
 				
@@ -200,7 +200,7 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("promote")) {
 				
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t promote [player]");
+					player.sendMessage(ChatColor.GOLD + "/f promote [player]");
 					return true;
 				}
 				
@@ -222,7 +222,7 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("demote")) {
 				
 				if(args.length < 2) {
-					player.sendMessage(ChatColor.GOLD + "/t promote [player]");
+					player.sendMessage(ChatColor.GOLD + "/f promote [player]");
 					return true;
 				}
 				
@@ -244,12 +244,12 @@ public class FactionCommands implements CommandExecutor {
 			if(args[0].equalsIgnoreCase("claim")) {
 				
 				if(!FactionManager.getManager().isPlayerInFaction(player)) {
-					player.sendMessage(ChatColor.RED + "Must be in a team to claim land! /t create [name]");
+					player.sendMessage(ChatColor.RED + "Must be in a faction to claim land! /f create [name]");
 					return true;
 				}
 				
 				if(FactionManager.getManager().isPlayerInFaction(player) && !FactionManager.getManager().getFactionByPlayer(player).getLeader().equals(player.getUniqueId().toString())) {
-					player.sendMessage(ChatColor.RED + "Only team leaders can do this command");
+					player.sendMessage(ChatColor.RED + "Only faction leaders can do this command");
 					return true;
 				}
 				
@@ -302,7 +302,7 @@ public class FactionCommands implements CommandExecutor {
 						
 						FactionManager.getManager().factionInfo(player, faction.getName());
 					} else {
-						player.sendMessage(ChatColor.RED + "/t who [team/player]");
+						player.sendMessage(ChatColor.RED + "/t who [faction/player]");
 					}
 					
 					return true;
@@ -425,14 +425,14 @@ public class FactionCommands implements CommandExecutor {
 					
 					if(!chat.contains(player.getName())) {
 						chat.add(player.getName());
-						player.sendMessage(ChatColor.YELLOW + "Talking in team chat now");
+						player.sendMessage(ChatColor.YELLOW + "Talking in faction chat now");
 					} else {
 						chat.remove(player.getName());
 						player.sendMessage(ChatColor.YELLOW + "Talking in public chat now");
 					}
 					
 				} else {
-					player.sendMessage(ChatColor.RED + "Must be in a team to do this command");
+					player.sendMessage(ChatColor.RED + "Must be in a faction to do this command");
 				}
 				
 			} 
@@ -450,15 +450,15 @@ public class FactionCommands implements CommandExecutor {
 								for(Player p : Bukkit.getOnlinePlayers()) {
 									if(faction.getMemberList().contains(p.getUniqueId().toString())) {
 										
-										p.sendMessage(ChatColor.DARK_GREEN + player.getName() + ChatColor.YELLOW + " has set the Team Home! user /t home");
+										p.sendMessage(ChatColor.DARK_GREEN + player.getName() + ChatColor.YELLOW + " has set the Faction Home! user /t home");
 										
 									}
 								}
 							} else {
-								player.sendMessage(ChatColor.RED + "You can only set Team Home inside your own claim!");
+								player.sendMessage(ChatColor.RED + "You can only set Faction Home inside your own claim!");
 							}
 						}  else {
-							player.sendMessage(ChatColor.RED + "You can only set Team Home inside your own claim!");
+							player.sendMessage(ChatColor.RED + "You can only set Faction Home inside your own claim!");
 						}
 					}
 				}
@@ -469,14 +469,14 @@ public class FactionCommands implements CommandExecutor {
 					Faction faction = FactionManager.getManager().getFactionByPlayer(player);
 					
 					if(faction.getHome() == null) {
-						player.sendMessage(ChatColor.RED + "Your team has not set a home yet");
+						player.sendMessage(ChatColor.RED + "Your faction has not set a home yet");
 						return true;
 					}
 					
 					home.put(player.getName(), 10);
 					
 				} else {
-					player.sendMessage(ChatColor.RED + "You're not in a team");
+					player.sendMessage(ChatColor.RED + "You're not in a faction");
 				}
 			}
 			

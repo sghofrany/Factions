@@ -3,9 +3,10 @@ package me.iran.factions.listeners;
 import me.iran.factions.Factions;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
-import net.md_5.bungee.api.ChatColor;
+import me.iran.factions.utils.Utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,12 +14,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class FactionDeathEvent implements Listener {
 
-	Factions plugin;
+	private Utils utils = new Utils();
 	
-	public FactionDeathEvent (Factions plugin) {
-		this.plugin = plugin;
-	}
-
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
@@ -38,8 +35,7 @@ public class FactionDeathEvent implements Listener {
 			
 			for(Player p : Bukkit.getOnlinePlayers()) {
 				if(faction.getMemberList().contains(p.getUniqueId().toString())) {
-					FactionManager.getManager();
-					p.sendMessage(ChatColor.DARK_RED + player.getName() + ChatColor.RED + " has died " + ChatColor.YELLOW + "(DTR: " + FactionManager.formatDouble(faction.getDtr()) + ")");
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("death-message").replace("%dtr%", utils.formatDouble(faction.getDtr())).replace("%player%", player.getName())));
 				}
 			}
 			

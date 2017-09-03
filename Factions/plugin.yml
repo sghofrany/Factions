@@ -3,10 +3,13 @@ main: me.iran.factions.Factions
 version: 1.0
 softdepend: [Vault]
 commands:
-  team:
-    description: create a team
-    aliases: [t,f, faction]
+  faction:
+    description: create a faction
+    aliases: [t,f, team]
   systemfaction:
     aliases: [sys, sf]
     description: create a system factions
+  factionadmin:
+    aliases: [fa]
+    description: control player factions using a set of commands
     

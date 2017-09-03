@@ -1,8 +1,8 @@
 package me.iran.factions.faction.cmd;
 
-import me.iran.factions.Factions;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
+import me.iran.factions.utils.Utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,12 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class FactionAdminCommands implements CommandExecutor {
-
-	Factions plugin;
 	
-	public FactionAdminCommands(Factions plugin) {
-		this.plugin = plugin;
-	}
+	private Utils utils = new Utils();
 	
 	@SuppressWarnings("deprecation")
 	@Override
@@ -31,13 +27,19 @@ public class FactionAdminCommands implements CommandExecutor {
 		Player player = (Player) sender;
 		
 		if(cmd.getName().equalsIgnoreCase("factionadmin")) {
-			if(!player.hasPermission("hcf.admin")) {
+			if(!player.hasPermission("faction.admin")) {
 				player.sendMessage(ChatColor.RED + "No Permission.");
 				return true;
 			}
 			
 			if(args.length < 1) {
-				//add message
+				player.sendMessage(ChatColor.YELLOW + "/fa setdtr <faction> <dtr>");
+				player.sendMessage(ChatColor.YELLOW + "/fa setfreezetime <faction> <time in seconds>");
+				player.sendMessage(ChatColor.YELLOW + "/fa sethome <faction>");
+				player.sendMessage(ChatColor.YELLOW + "/fa kick <faction> <player>");
+				player.sendMessage(ChatColor.YELLOW + "/fa invite <faction> <player>");
+				player.sendMessage(ChatColor.YELLOW + "/fa revoke|uninivte <faction> <player>");
+				player.sendMessage(ChatColor.YELLOW + "/fa disband <faction>");
 				return true;
 			}
 			
@@ -47,25 +49,29 @@ public class FactionAdminCommands implements CommandExecutor {
 					return true;
 				}
 				
-				
-				if(FactionManager.getManager().getAllFactions().contains(FactionManager.getManager().getFactionByName(args[1]))) {
-					Faction faction = FactionManager.getManager().getFactionByName(args[1]);
+				try {
 					
-					String newDtr;
-					String dtr = args[2];
-					//newDtr = dtr.replaceAll("[^0-9]", "");
-					
-					double d = Double.parseDouble(dtr);
-					
-					if(d < 0) {
-						faction.setRaidable(true);
-					}
+					if(FactionManager.getManager().getAllFactions().contains(FactionManager.getManager().getFactionByName(args[1]))) {
+						Faction faction = FactionManager.getManager().getFactionByName(args[1]);
+						
+						double d = Double.parseDouble(args[2]);
+						
+						if(d < 0) {
+							faction.setRaidable(true);
+						}
 
-					//faction.setDtr(d);
+						faction.setDtr(d);
+						
+						player.sendMessage(ChatColor.RED + "You have set the DTR of faction " + ChatColor.YELLOW + faction.getName() + " " + ChatColor.RED + utils.formatDouble(d));
+						
+					}
 					
-					player.sendMessage(ChatColor.RED + "You have set the DTR of faction " + ChatColor.YELLOW + faction.getName() + " " + ChatColor.RED + dtr);
 					
+				} catch(Exception e) {
+					player.sendMessage(ChatColor.RED + "Incorrect format /fa setdtr <faction> <dtr>");
 				}
+				
+
 				
 			}
 			
@@ -75,27 +81,28 @@ public class FactionAdminCommands implements CommandExecutor {
 					return true;
 				}
 				
-				
-				if(FactionManager.getManager().getAllFactions().contains(FactionManager.getManager().getFactionByName(args[1]))) {
-					Faction faction = FactionManager.getManager().getFactionByName(args[1]);
+				try {
 					
-					String newTime;
-					String time = args[2];
-					newTime = time.replaceAll("[^0-9]", "");
-					
-					int t = Integer.parseInt(newTime);
-					
-					if(t < 0) {
-						player.sendMessage(ChatColor.RED + "Time can't be negative");
-						return true;
+					if(FactionManager.getManager().getAllFactions().contains(FactionManager.getManager().getFactionByName(args[1]))) {
+						Faction faction = FactionManager.getManager().getFactionByName(args[1]);
+						
+						int t = Integer.parseInt(args[2]);
+						
+						if(t < 0) {
+							player.sendMessage(ChatColor.RED + "Can't set the freezetime to negative");
+							return true;
+						}
+						
+						faction.setFreezeTime(t);
+						faction.setFrozen(true);
+						
+						player.sendMessage(ChatColor.RED + "You have set the Freeze Time of faction " + ChatColor.YELLOW + faction.getName() + " " + ChatColor.RED + utils.toMMSS(t));
+						
 					}
-					
-					faction.setFreezeTime(t);
-					faction.setFrozen(true);
-					
-					player.sendMessage(ChatColor.RED + "You have set the Freeze Time of faction " + ChatColor.YELLOW + faction.getName() + " " + ChatColor.RED + t);
-					
+				} catch(Exception e) {
+					player.sendMessage(ChatColor.RED + "Incorrect format /fa setfreezetime <faction> <time in seconds>");
 				}
+
 				
 			}
 			
@@ -207,9 +214,9 @@ public class FactionAdminCommands implements CommandExecutor {
 				
 			}
 			
-			if(args[0].equalsIgnoreCase("revoke")) {
+			if(args[0].equalsIgnoreCase("revoke") || args[0].equalsIgnoreCase("uninvite")) {
 				if(args.length < 3) {
-					player.sendMessage(ChatColor.RED + "/fa revoke <player> <faction>");
+					player.sendMessage(ChatColor.RED + "/fa revoke|uninvite <player> <faction>");
 					return true;
 				}
 				
@@ -239,25 +246,28 @@ public class FactionAdminCommands implements CommandExecutor {
 				
 			}
 			
-			if(args[0].equalsIgnoreCase("disband")) {
-				if(args.length < 2) {
+			if (args[0].equalsIgnoreCase("disband")) {
+				if (args.length < 2) {
 					player.sendMessage(ChatColor.RED + "/fa disband <faction>");
 					return true;
 				}
-				
-				if(FactionManager.getManager().getAllFactions().contains(FactionManager.getManager().getFactionByName(args[1]))) {
+
+				if (FactionManager.getManager().getAllFactions()
+						.contains(FactionManager.getManager().getFactionByName(args[1]))) {
 					Faction faction = FactionManager.getManager().getFactionByName(args[1]);
-					
-					Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD + player.getName() + " has force disbanded the faction " + ChatColor.GOLD.toString() + ChatColor.BOLD + faction.getName());
-					
+
+					Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD + player.getName()
+							+ " has force disbanded the faction " + ChatColor.GOLD.toString() + ChatColor.BOLD
+							+ faction.getName());
+
 					faction.getMemberList().clear();
 					faction.getCaptainList().clear();
 					faction.getInvitesList().clear();
-					
+
 					FactionManager.getManager().getAllFactions().remove(faction);
-					
+
 				}
-				
+
 			}
 			
 			

@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.iran.factions.faction.ClaimEvent;
 import me.iran.factions.faction.FactionManager;
+import me.iran.factions.faction.cmd.FactionAdminCommands;
 import me.iran.factions.faction.cmd.FactionCommands;
 import me.iran.factions.listeners.BlockChangeInClaim;
 import me.iran.factions.listeners.EnteringClaim;
@@ -45,10 +46,10 @@ public class Factions extends JavaPlugin {
 		}
 		
 		Bukkit.getPluginManager().registerEvents(new ClaimEvent(this), this);
-		Bukkit.getPluginManager().registerEvents(new FactionDeathEvent(this), this);
+		Bukkit.getPluginManager().registerEvents(new FactionDeathEvent(), this);
 		Bukkit.getPluginManager().registerEvents(new BlockChangeInClaim(this), this);
 		Bukkit.getPluginManager().registerEvents(new PlaceItemsInClaim(this), this);
-		Bukkit.getPluginManager().registerEvents(new EnteringClaim(this), this);
+		Bukkit.getPluginManager().registerEvents(new EnteringClaim(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerConnectionEvents(this), this);
 		Bukkit.getPluginManager().registerEvents(new MoveWhileTeleporting(this), this);
 		Bukkit.getPluginManager().registerEvents(new InteractWithItemsInClaim(this), this);
@@ -145,9 +146,9 @@ public class Factions extends JavaPlugin {
 		
 		SystemFactionManager.getManager().loadFactions();
 		
-		getCommand("team").setExecutor(new FactionCommands(this));
+		getCommand("faction").setExecutor(new FactionCommands(this));
 		getCommand("systemfaction").setExecutor(new SystemFactionCommands());
-		//getCommand("factionadmin").setExecutor(new FactionAdminCommands(this));
+		getCommand("factionadmin").setExecutor(new FactionAdminCommands());
 
 		getConfig().options().copyDefaults(true);
 		saveConfig();

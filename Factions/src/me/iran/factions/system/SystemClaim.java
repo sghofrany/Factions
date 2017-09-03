@@ -2,8 +2,6 @@ package me.iran.factions.system;
 
 import org.bukkit.Location;
 
-import me.iran.factions.faction.Faction;
-
 public class SystemClaim {
 	private Location loc1;
 	private Location loc2;

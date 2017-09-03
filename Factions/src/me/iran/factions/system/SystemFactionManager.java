@@ -12,7 +12,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import me.iran.factions.Factions;
-import me.iran.factions.faction.Faction;
 
 public class SystemFactionManager {
 
@@ -55,7 +54,7 @@ public class SystemFactionManager {
 				
 					String motd = fac.getString("factions." + f + ".motd");
 					String facName = fac.getString("factions." + f + ".name");
-					
+
 					boolean deathban = fac.getBoolean("factions." + f + ".deathban");
 					
 					SystemFaction faction = new SystemFaction(facName);
@@ -67,8 +66,11 @@ public class SystemFactionManager {
 						int x2 = fac.getInt("factions." + f + ".loc2.x");
 						int z2 = fac.getInt("factions." + f + ".loc2.z");
 						
-						Location loc1 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), x1, 0, z1);
-						Location loc2 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), x2, 0, z2);
+						String loc1World = fac.getString("factions." + f + ".loc1.world");
+						String loc2World = fac.getString("factions." + f + ".loc2.world");
+						
+						Location loc1 = new Location(Bukkit.getWorld(loc1World), x1, 0, z1);
+						Location loc2 = new Location(Bukkit.getWorld(loc2World), x2, 0, z2);
 					
 						faction.setLoc1(loc1);
 						faction.setLoc2(loc2);
@@ -77,15 +79,11 @@ public class SystemFactionManager {
 					if(fac.contains("factions." + f + ".home")) {
 						
 						int x = fac.getInt("factions." + f + ".home.x");
-						int y = fac.getInt("factions." + f + ".home.y");
 						int z = fac.getInt("factions." + f + ".home.z");
-						float pitch = fac.getFloat("factions." + f + ".home.pitch");
-						float yaw = fac.getFloat("factions." + f + ".home.yaw");
-					
-						Location home = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), x, y, z);
 						
-						home.setPitch(pitch);
-						home.setYaw(yaw);
+						String world = fac.getString("factions." + f + ".home.world");
+					
+						Location home = new Location(Bukkit.getWorld(world), x, 0, z);
 					
 						faction.setHome(home);
 					}
@@ -155,31 +153,31 @@ public class SystemFactionManager {
 					if (faction.getLoc1() != null) {
 						facConfig.createSection("factions." + name + ".loc1.x");
 						facConfig.createSection("factions." + name + ".loc1.z");
-
+						facConfig.createSection("factions." + name + ".loc1.world");
+						
 						facConfig.set("factions." + name + ".loc1.x", faction.getLoc1().getBlockX());
 						facConfig.set("factions." + name + ".loc1.z", faction.getLoc1().getBlockZ());
+						facConfig.set("factions." + name + ".loc1.world", faction.getLoc1().getWorld().getName());
 					}
 
 					if (faction.getLoc2() != null) {
 						facConfig.createSection("factions." + name + ".loc2.x");
 						facConfig.createSection("factions." + name + ".loc2.z");
-
+						facConfig.createSection("factions." + name + ".loc2.world");
+						
 						facConfig.set("factions." + name + ".loc2.x", faction.getLoc2().getBlockX());
 						facConfig.set("factions." + name + ".loc2.z", faction.getLoc2().getBlockZ());
+						facConfig.set("factions." + name + ".loc2.world", faction.getLoc2().getWorld().getName());
 					}
 
 					if (faction.getHome() != null) {
 						facConfig.createSection("factions." + name + ".home.x");
-						facConfig.createSection("factions." + name + ".home.y");
 						facConfig.createSection("factions." + name + ".home.z");
-						facConfig.createSection("factions." + name + ".home.pitch");
-						facConfig.createSection("factions." + name + ".home.yaw");
+						facConfig.createSection("factions." + name + ".home.world");
 
 						facConfig.set("factions." + name + ".home.x", faction.getHome().getBlockX());
-						facConfig.set("factions." + name + ".home.y", faction.getHome().getBlockY());
 						facConfig.set("factions." + name + ".home.z", faction.getHome().getBlockZ());
-						facConfig.set("factions." + name + ".home.pitch", faction.getHome().getPitch());
-						facConfig.set("factions." + name + ".home.yaw", faction.getHome().getYaw());
+						facConfig.set("factions." + name + ".home.world", faction.getHome().getWorld().getName());
 
 					}
 
@@ -200,6 +198,7 @@ public class SystemFactionManager {
 					if (faction.getLoc1() != null) {
 						facConfig.set("factions." + name + ".loc1.x", faction.getLoc1().getBlockX());
 						facConfig.set("factions." + name + ".loc1.z", faction.getLoc1().getBlockZ());
+						facConfig.set("factions." + name + ".loc1.world", faction.getLoc1().getWorld().getName());
 					} else {
 						facConfig.set("factions." + name + ".loc1", null);
 					}
@@ -207,17 +206,15 @@ public class SystemFactionManager {
 					if (faction.getLoc2() != null) {
 						facConfig.set("factions." + name + ".loc2.x", faction.getLoc2().getBlockX());
 						facConfig.set("factions." + name + ".loc2.z", faction.getLoc2().getBlockZ());
+						facConfig.set("factions." + name + ".loc2.world", faction.getLoc2().getWorld().getName());
 					} else {
 						facConfig.set("factions." + name + ".loc2", null);
 					}
 
 					if (faction.getHome() != null) {
 						facConfig.set("factions." + name + ".home.x", faction.getHome().getBlockX());
-						facConfig.set("factions." + name + ".home.y", faction.getHome().getBlockY());
 						facConfig.set("factions." + name + ".home.z", faction.getHome().getBlockZ());
-
-						facConfig.set("factions." + name + ".home.pitch", faction.getHome().getPitch());
-						facConfig.set("factions." + name + ".home.yaw", faction.getHome().getYaw());
+						facConfig.set("factions." + name + ".home.world", faction.getLoc1().getWorld().getName());
 
 					} else {
 						facConfig.set("factions." + name + ".home", null);

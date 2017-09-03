@@ -11,6 +11,7 @@ import java.util.UUID;
 import me.iran.factions.Factions;
 import me.iran.factions.system.SystemFaction;
 import me.iran.factions.system.SystemFactionManager;
+import me.iran.factions.utils.Utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,8 +23,10 @@ import org.bukkit.entity.Player;
 
 public class FactionManager {
 
-	File fFile = null;
-	File file = null;
+	private Utils utils = new Utils();
+	
+	private File fFile = null;
+	private File file = null;
 	
 	private static ArrayList<Faction> factions = new ArrayList<>();
 	
@@ -781,7 +784,7 @@ public class FactionManager {
 		
 		
 		if(faction.getFreezeTime() > 0) {
-			String time = toMMSS(faction.getFreezeTime());
+			String time = utils.toMMSS(faction.getFreezeTime());
 			
 			player.sendMessage(ChatColor.RED + "Freeze Time: " + ChatColor.GOLD + time);
 		}
@@ -882,7 +885,7 @@ public class FactionManager {
 		player.sendMessage(ChatColor.YELLOW + "[Announcement] " + ChatColor.LIGHT_PURPLE + faction.getMotd());
 		
 		if(faction.getFreezeTime() > 0) {
-			String time = toMMSS(faction.getFreezeTime());
+			String time = utils.toMMSS(faction.getFreezeTime());
 			
 			player.sendMessage(ChatColor.RED + "Freeze Time: " + ChatColor.GOLD + time);
 		}
@@ -1145,30 +1148,6 @@ public class FactionManager {
 			
 		}
 		
-	}
-	
-	public static String toMMSS(long dura){
-		int minute = (int)(dura / 60.0D);
-		long second = dura - (minute * 60);
-		String formatted = "";
-		{
-			if(minute < 10){
-				formatted += "";
-			}
-			formatted += minute;
-			formatted += ":";
-			if(second < 10){
-				formatted += "0";
-			}
-			formatted += second;
-		}
-		return formatted;
-	}
-	
-	public static String formatDouble(double db) {
-		DecimalFormat f = new DecimalFormat("#0.00");
-		
-		return f.format(db);
 	}
 	
 	public ArrayList<Faction> getAllFactions() {
