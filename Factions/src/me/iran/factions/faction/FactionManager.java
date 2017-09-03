@@ -320,13 +320,13 @@ public class FactionManager {
 		
 		for(String no : notAllowed) {
 			if (name.contains(no)) {
-				leader.sendMessage(ChatColor.RED + "You can't use those characters in your team name!");
+				leader.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("invaild-characters")));
 				return;
 			}
 		}
 		
 		if(name.length() < 3 || name.length() > 12) {
-			leader.sendMessage(ChatColor.RED + " Team name has to be atleast 3 letters but no more than 12!");
+			leader.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("name-length")));
 			return;
 		}
 		
@@ -336,7 +336,7 @@ public class FactionManager {
 		}
 		
 		if(factions.contains(getFactionByName(name))) {
-			leader.sendMessage(ChatColor.RED + "That team already exists");
+			leader.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("faction-exists")));
 			return;
 		}
 		
@@ -344,7 +344,7 @@ public class FactionManager {
 		
 		factions.add(faction);
 		
-		leader.sendMessage(ChatColor.GOLD + "Successfully created the team " + ChatColor.RED + name);
+		Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("faction-created").replace("%faction%", faction.getName()).replace("%player%", leader.getName())));
 		
 	}
 	
@@ -360,17 +360,17 @@ public class FactionManager {
 			return;
 		}
 		
-	/*	if(faction.isRaidable()) {
+		if(faction.isRaidable()) {
 			player.sendMessage(ChatColor.RED + "Can't disband a team while raidable!");
 			return;
-		}*/
+		}
 		
 		if(faction.getLeader().equalsIgnoreCase(player.getUniqueId().toString())) {
 			faction.getMemberList().clear();
 			faction.getCaptainList().clear();
 			factions.remove(faction);
 			
-			Bukkit.broadcastMessage(ChatColor.RED + "The team " + ChatColor.YELLOW + faction.getName() + ChatColor.RED + " has been disbanded!");
+			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("faction-disbanded")));
 		} else {
 			player.sendMessage(ChatColor.RED + "This command is only for team Leaders");
 		}
@@ -415,12 +415,12 @@ public class FactionManager {
 			if(faction.getLeader().equals(player.getUniqueId().toString()) || faction.getCaptainList().contains(player.getUniqueId().toString())) {
 				
 				if(faction.getMemberList().contains(target.getUniqueId().toString())) {
-					player.sendMessage(ChatColor.RED + target.getName() + ChatColor.GOLD + " is already in your team");
+					player.sendMessage(ChatColor.RED + target.getName() + ChatColor.GOLD + " is already in your faction");
 					return;
 				}
 				
 				if(faction.getInvitesList().contains(target.getUniqueId().toString())) {
-					player.sendMessage(ChatColor.RED + target.getName() + ChatColor.GOLD + " has already been invited to your team");
+					player.sendMessage(ChatColor.RED + target.getName() + ChatColor.GOLD + " has already been invited to your faction");
 					return;
 				}
 				
@@ -432,13 +432,9 @@ public class FactionManager {
 				for (Player p : Bukkit.getOnlinePlayers()) {
 
 					if (faction.getMemberList().contains(p.getUniqueId().toString())) {
-
-						p.sendMessage(ChatColor.DARK_GREEN + target.getName() + ChatColor.YELLOW + " has been invited to join your faction!");
-
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("player-invited").replace("%player%", target.getName())));
 					}
-
 				}
-					
 				
 			} else {
 				player.sendMessage(ChatColor.RED + "Only team leader and captains can do this command");
@@ -470,18 +466,13 @@ public class FactionManager {
 					
 				faction.removeInvite(target.getUniqueId().toString());
 
-				target.sendMessage(ChatColor.GOLD + "Faction " + ChatColor.RED + faction.getName() + ChatColor.GOLD + " has revoked your to join their team!");
+				target.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("revoke-invite").replace("%faction%", faction.getName())));
 
 				for (Player p : Bukkit.getOnlinePlayers()) {
-
 					if (faction.getMemberList().contains(p.getUniqueId().toString())) {
-
-						p.sendMessage(ChatColor.RED + target.getName() + ChatColor.YELLOW + " has been un-invited to join your team!");
-
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("player-uninvited").replace("%player%", target.getName())));
 					}
-
 				}
-					
 				
 			} else {
 				player.sendMessage(ChatColor.RED + "Only team leader and captains can do this command");
@@ -528,7 +519,7 @@ public class FactionManager {
 
 				if (faction.getMemberList().contains(p.getUniqueId().toString())) {
 
-					p.sendMessage(ChatColor.DARK_GREEN + player.getName() + ChatColor.YELLOW + " has joined your team!");
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("player-join-faction").replace("%player%", player.getName())));
 
 				}
 			}
@@ -579,7 +570,7 @@ public class FactionManager {
 
 				if (faction.getMemberList().contains(p.getUniqueId().toString())) {
 
-					p.sendMessage(ChatColor.RED + player.getName() + ChatColor.YELLOW + " has left your team!");
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("player-leave-faction").replace("%player%", player.getName())));
 
 				}
 			}
@@ -624,7 +615,7 @@ public class FactionManager {
 
 				if (faction.getMemberList().contains(p.getUniqueId().toString())) {
 
-					p.sendMessage(ChatColor.LIGHT_PURPLE + player.getName() + " has made " + target.getName() + " the new Leader");
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("make-leader").replace("%target%", target.getName()).replace("%player%", player.getName())));
 
 				}
 			}
@@ -658,11 +649,8 @@ public class FactionManager {
 			faction.addCaptain(target.getUniqueId().toString());
 			
 			for (Player p : Bukkit.getOnlinePlayers()) {
-
 				if (faction.getMemberList().contains(p.getUniqueId().toString())) {
-
-					p.sendMessage(ChatColor.LIGHT_PURPLE + player.getName() + " has promoted " + target.getName() + " to Captain");
-
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("make-captain").replace("%target%", target.getName()).replace("%player%", player.getName())));
 				}
 			}
 			
@@ -697,9 +685,7 @@ public class FactionManager {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 
 				if (faction.getMemberList().contains(p.getUniqueId().toString())) {
-
-					p.sendMessage(ChatColor.RED + player.getName() + " has demoted " + target.getName() + " to Member");
-
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("demote-captain").replace("%target%", target.getName()).replace("%player%", player.getName())));
 				}
 			}
 			

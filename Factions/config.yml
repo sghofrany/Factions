@@ -1,5 +1,26 @@
 faction-limit: 30
 faction-world: 'world'
+invaild-characters: '&cCant use those characters in your faction name'
+name-length: '&cYour faction name must be between 3 - 12 characters'
+faction-exists: '&cA faction by that name already exists'
+faction-created: '&a%player% &ehas created the faction &6&l%faction%'
+faction-disbanded: '&cFaction &l%faction% &cwas disbanded'
+player-invited: '&3%player% &bhas been invited to join the faction'
+player-uninvited: '&4%player% &chas been uninvited from joining your faction'
+player-join-faction: '&a&l%player% &bhas joined the faction'
+player-leave-faction: '&c&l%player% &chas left the faction'
+make-leader: '&6&l%player% &ehas made &c&l%target% &ethe leader'
+make-captain: '&6&l%player% &ehas made &c&l%target% &ethe captain'
+demote-captain: '&6&l%player% &ehas demoted &c&l%target%'
+revoke-invite: '&c%faction% &ehas revoked your invite to join their faction'
+enter-friendly-claim: '&eYou have entered the claim of &a%faction% &7(%dtr%) (&cDeathban&7)'
+leave-enemy-claim: '&eYou have left the claim of &c%faction% &7(%dtr%) (&cDeathban&7)'
+leave-friendly-claim: '&eYou have left the claim of &a%faction% &7(%dtr%) (&cDeathban&7)'
+enter-enemy-claim: '&eYou have entered the claim of &c%faction% &7(%dtr%) (&cDeathban&7)'
+enter-safezone: '&eYou have entered &a&l%faction% &7(&aSafezone&7)'
+enter-warzone: '&eYou have entered &a&l%faction% &7(&cDeathban&7)'
+leave-safezone: '&eYou have left &a&l%faction% &7(&aSafezone&7)'
+leave-warzone: '&eYou have left &a&l%faction% &7(&cDeathban&7)'
 interact-in-claim:
   - CHEST
   - ENDER_CHEST

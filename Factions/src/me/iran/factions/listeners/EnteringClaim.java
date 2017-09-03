@@ -61,10 +61,12 @@ public class EnteringClaim implements Listener {
 		Player player = event.getPlayer();
 		
 		if(event.getFaction().isDeathban()) {
-			player.sendMessage(ChatColor.YELLOW + "Entering " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.RED + "Deathban" + ChatColor.GRAY + ")");
-		} else {
-			player.sendMessage(ChatColor.YELLOW + "Entering " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.GREEN + "Safezone" + ChatColor.GRAY + ")");
-		}
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-warzone")
+					.replace("%faction%", event.getFaction().getName())));	
+			} else {
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-safezone")
+					.replace("%faction%", event.getFaction().getName())));	
+			}
 		
 	}
 	
@@ -73,10 +75,12 @@ public class EnteringClaim implements Listener {
 		Player player = event.getPlayer();
 		
 		if(event.getFaction().isDeathban()) {
-			player.sendMessage(ChatColor.YELLOW + "Leaving " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.RED + "Deathban" + ChatColor.GRAY + ")");
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-warzone")
+					.replace("%faction%", event.getFaction().getName())));
 		} else {
-			player.sendMessage(ChatColor.YELLOW + "Leaving " + event.getFaction().getColor() + event.getFaction().getName() + ChatColor.YELLOW + "'s Claim " + ChatColor.GRAY + "(" + ChatColor.GREEN + "Safezone" + ChatColor.GRAY + ")");
-		}
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-safezone")
+					.replace("%faction%", event.getFaction().getName())));	
+			}
 		
 	}
 	
@@ -91,15 +95,18 @@ public class EnteringClaim implements Listener {
 			
 			if(faction.getName().equalsIgnoreCase(event.getFaction().getName())) {
 				
-				player.sendMessage(ChatColor.YELLOW + "You have entered the claim of " + ChatColor.GREEN + event.getFaction().getName() + ChatColor.GRAY + " (" + formatDouble(event.getFaction().getDtr()) + ")");
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-friendly-claim")
+						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 				
 			} else {
-				player.sendMessage(ChatColor.YELLOW + "You have entered the claim of " + ChatColor.RED + event.getFaction().getName() + ChatColor.GRAY + " (" + formatDouble(event.getFaction().getDtr()) + ")");
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-enemy-claim")
+						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 			}
 			
 		} else {
-			player.sendMessage(ChatColor.YELLOW + "You have entered the claim of " + ChatColor.RED + event.getFaction().getName() + ChatColor.GRAY + " (" + formatDouble(event.getFaction().getDtr()) + ")");
-		}
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("enter-enemy-claim")
+					.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+	}
 		
 	}
 	
@@ -114,14 +121,17 @@ public class EnteringClaim implements Listener {
 			
 			if(faction.getName().equalsIgnoreCase(event.getFaction().getName())) {
 				
-				player.sendMessage(ChatColor.YELLOW + "You have left the claim of " + ChatColor.GREEN + event.getFaction().getName() + ChatColor.GRAY + " (" + formatDouble(event.getFaction().getDtr()) + ")");
-				
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-friendly-claim")
+						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
+			
 			} else {
-				player.sendMessage(ChatColor.YELLOW + "You have left the claim of " + ChatColor.RED + event.getFaction().getName() + ChatColor.GRAY + " (" + formatDouble(event.getFaction().getDtr()) + ")");
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-enemy-claim")
+						.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 			}
 			
 		} else {
-			player.sendMessage(ChatColor.YELLOW + "You have left the claim of " + ChatColor.RED + event.getFaction().getName() + ChatColor.GRAY + " (" + formatDouble(event.getFaction().getDtr()) + ")");
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("leave-enemy-claim")
+					.replace("%dtr%", formatDouble(event.getFaction().getDtr()).toString()).replace("%faction%", event.getFaction().getName())));
 		}
 		
 	}

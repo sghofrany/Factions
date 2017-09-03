@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import me.iran.factions.Factions;
+import me.iran.factions.system.SystemFaction;
+import me.iran.factions.system.SystemFactionManager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -227,6 +229,53 @@ public class ClaimEvent implements Listener {
 				}
 			}
 		}
+		
+	for(SystemFaction faction : SystemFactionManager.getManager().getAllFactions()) {
+			
+			if(faction.getLoc1() != null && faction.getLoc2() != null) {
+				int maxx = Math.max(faction.getLoc1().getBlockX(), faction.getLoc2().getBlockX());
+				int minx = Math.min(faction.getLoc1().getBlockX(), faction.getLoc2().getBlockX());
+				
+				int maxz = Math.max(faction.getLoc1().getBlockZ(), faction.getLoc2().getBlockZ());
+				int minz = Math.min(faction.getLoc1().getBlockZ(), faction.getLoc2().getBlockZ());
+				
+				block++;
+				
+				if(block > 15) {
+					block = 0;
+				}
+				
+				for(int i = 4; i < 256; i++) {
+					
+					Location loc1 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), minx, i, minz);
+					Location loc2 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), maxx, i, maxz);
+					Location loc3 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), maxx, i, minz);
+					Location loc4 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), minx, i, maxz);
+					
+					Block block1 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc1);
+					Block block2 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc2);
+					Block block3 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc3);
+					Block block4 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc4);
+					
+					if(block1.getType() == Material.AIR) {
+						player.sendBlockChange(loc1, Material.getMaterial(95), (byte) block);
+					}
+					
+					if(block2.getType() == Material.AIR) {
+						player.sendBlockChange(loc2, Material.getMaterial(95), (byte) block);
+					}
+					
+					if(block3.getType() == Material.AIR) {
+						player.sendBlockChange(loc3, Material.getMaterial(95), (byte) block);
+					}
+					
+					if(block4.getType() == Material.AIR) {
+						player.sendBlockChange(loc4, Material.getMaterial(95), (byte) block);
+					}
+					
+				}
+			}
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -244,15 +293,57 @@ public class ClaimEvent implements Listener {
 				
 				for(int i = 4; i < 256; i++) {
 					
-					Location loc1 = new Location(Bukkit.getWorld("world"), minx, i, minz);
-					Location loc2 = new Location(Bukkit.getWorld("world"), maxx, i, maxz);
-					Location loc3 = new Location(Bukkit.getWorld("world"), maxx, i, minz);
-					Location loc4 = new Location(Bukkit.getWorld("world"), minx, i, maxz);
+					Location loc1 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), minx, i, minz);
+					Location loc2 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), maxx, i, maxz);
+					Location loc3 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), maxx, i, minz);
+					Location loc4 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), minx, i, maxz);
 					
-					Block block1 = Bukkit.getWorld("world").getBlockAt(loc1);
-					Block block2 = Bukkit.getWorld("world").getBlockAt(loc2);
-					Block block3 = Bukkit.getWorld("world").getBlockAt(loc3);
-					Block block4 = Bukkit.getWorld("world").getBlockAt(loc4);
+					Block block1 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc1);
+					Block block2 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc2);
+					Block block3 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc3);
+					Block block4 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc4);
+					
+					if(block1.getType() == Material.AIR) {
+						player.sendBlockChange(loc1, Material.AIR, (byte) 0);
+					}
+					
+					if(block2.getType() == Material.AIR) {
+						player.sendBlockChange(loc2, Material.AIR, (byte) 0);
+					}
+					
+					if(block3.getType() == Material.AIR) {
+						player.sendBlockChange(loc3, Material.AIR, (byte) 0);
+					}
+					
+					if(block4.getType() == Material.AIR) {
+						player.sendBlockChange(loc4, Material.AIR, (byte) 0);
+					}
+				}
+			}
+		}
+		
+		for(SystemFaction faction : SystemFactionManager.getManager().getAllFactions()) {
+			
+			if(faction.getLoc1() != null && faction.getLoc2() != null) {
+				
+				int maxx = Math.max(faction.getLoc1().getBlockX(), faction.getLoc2().getBlockX());
+				int minx = Math.min(faction.getLoc1().getBlockX(), faction.getLoc2().getBlockX());
+				
+				int maxz = Math.max(faction.getLoc1().getBlockZ(), faction.getLoc2().getBlockZ());
+				int minz = Math.min(faction.getLoc1().getBlockZ(), faction.getLoc2().getBlockZ());
+				
+				
+				for(int i = 4; i < 256; i++) {
+					
+					Location loc1 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), minx, i, minz);
+					Location loc2 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), maxx, i, maxz);
+					Location loc3 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), maxx, i, minz);
+					Location loc4 = new Location(Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")), minx, i, maxz);
+					
+					Block block1 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc1);
+					Block block2 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc2);
+					Block block3 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc3);
+					Block block4 = Bukkit.getWorld(Factions.getInstance().getConfig().getString("faction-world")).getBlockAt(loc4);
 					
 					if(block1.getType() == Material.AIR) {
 						player.sendBlockChange(loc1, Material.AIR, (byte) 0);
