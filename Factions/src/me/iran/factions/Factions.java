@@ -28,7 +28,9 @@ import net.milkbowl.vault.economy.Economy;
 
 public class Factions extends JavaPlugin {
 
-	File file = null;
+	//TODO: Stop people from breaking inside of system faction claims
+	
+	private File file = null;
 	
 	public static Factions instance;
 	
@@ -46,24 +48,33 @@ public class Factions extends JavaPlugin {
 			return;
 		}
 		
-		Bukkit.getPluginManager().registerEvents(new ClaimEvent(this), this);
-		Bukkit.getPluginManager().registerEvents(new FactionDeathEvent(), this);
-		Bukkit.getPluginManager().registerEvents(new BlockChangeInClaim(this), this);
-		Bukkit.getPluginManager().registerEvents(new PlaceItemsInClaim(this), this);
-		Bukkit.getPluginManager().registerEvents(new EnteringClaim(), this);
-		Bukkit.getPluginManager().registerEvents(new PlayerConnectionEvents(this), this);
-		Bukkit.getPluginManager().registerEvents(new MoveWhileTeleporting(this), this);
-		Bukkit.getPluginManager().registerEvents(new InteractWithItemsInClaim(this), this);
-		Bukkit.getPluginManager().registerEvents(new FactionChat(this), this);
-		Bukkit.getPluginManager().registerEvents(new SystemClaimEvent(), this);
-		Bukkit.getPluginManager().registerEvents(new PvPTimer(), this);
-		
 		run.runTaskTimer(this, 0, 20L);
 		
+		registerEvents();
+		
+		registerCommands();
+		
+		setupFiles(file);
+		
+		FactionManager.getManager().loadFactions();
+		
+		SystemFactionManager.getManager().loadFactions();
+		
+		getConfig().options().copyDefaults(true);
+		saveConfig();
+		
+	}
+	
+	public void onDisable() {
+		FactionManager.getManager().saveFactions();
+		SystemFactionManager.getManager().saveFactions();
+	}
+
+	private void setupFiles(File file) {
 		file = new File(this.getDataFolder() + "/Factions");
 
 		if (!file.exists()) {
-			System.out.println("[Factions] Couldn't Find any factions");
+		
 			file.mkdir();
 			file = new File(this.getDataFolder() + "/Factions", "deleteme.yml");
 			new YamlConfiguration();
@@ -143,34 +154,43 @@ public class Factions extends JavaPlugin {
 			
 			System.out.println("Created sysfactions.yml");
 		}
-		
-		FactionManager.getManager().loadFactions();
-		
-		SystemFactionManager.getManager().loadFactions();
-		
-		getCommand("faction").setExecutor(new FactionCommands(this));
-		getCommand("systemfaction").setExecutor(new SystemFactionCommands());
-		getCommand("factionadmin").setExecutor(new FactionAdminCommands());
+	}
 
-		getConfig().options().copyDefaults(true);
-		saveConfig();
+	private void registerEvents() {
 		
+		Bukkit.getPluginManager().registerEvents(new ClaimEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new FactionDeathEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new BlockChangeInClaim(), this);
+		Bukkit.getPluginManager().registerEvents(new PlaceItemsInClaim(), this);
+		Bukkit.getPluginManager().registerEvents(new EnteringClaim(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerConnectionEvents(), this);
+		Bukkit.getPluginManager().registerEvents(new MoveWhileTeleporting(), this);
+		Bukkit.getPluginManager().registerEvents(new InteractWithItemsInClaim(), this);
+		Bukkit.getPluginManager().registerEvents(new FactionChat(), this);
+		Bukkit.getPluginManager().registerEvents(new SystemClaimEvent(), this);
+		Bukkit.getPluginManager().registerEvents(new PvPTimer(), this);
+	
 	}
 	
-	public void onDisable() {
-		FactionManager.getManager().saveFactions();
-		SystemFactionManager.getManager().saveFactions();
+	private void registerCommands() {
+	
+		getCommand("faction").setExecutor(new FactionCommands());
+		
+		getCommand("systemfaction").setExecutor(new SystemFactionCommands());
+	
+		getCommand("factionadmin").setExecutor(new FactionAdminCommands());
+	
 	}
+	
+	private boolean setupEconomy() {
+		RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager()
+				.getRegistration(net.milkbowl.vault.economy.Economy.class);
+		if (economyProvider != null) {
+			economy = economyProvider.getProvider();
+		}
 
-    private boolean setupEconomy()
-    {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-        if (economyProvider != null) {
-            economy = economyProvider.getProvider();
-        }
-
-        return (economy != null);
-    }
+		return (economy != null);
+	}
     
     public static Factions getInstance() {
     	return instance;

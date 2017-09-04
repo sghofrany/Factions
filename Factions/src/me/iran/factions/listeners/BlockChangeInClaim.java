@@ -1,13 +1,12 @@
 package me.iran.factions.listeners;
 
-import me.iran.factions.Factions;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
-import net.md_5.bungee.api.ChatColor;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
@@ -18,12 +17,6 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class BlockChangeInClaim implements Listener {
 
-	Factions plugin;
-	
-	public BlockChangeInClaim (Factions plugin) {
-		this.plugin = plugin;
-	}
-	
 	@EventHandler
 	public void onBreak(BlockBreakEvent event) {
 		Player player = event.getPlayer();

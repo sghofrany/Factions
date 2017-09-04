@@ -95,7 +95,6 @@ public class SystemFactionCommands implements CommandExecutor {
 				player.getInventory().addItem(wand);
 				player.sendMessage(ChatColor.RED + "Now claiming for " + args[1]);
 			}
-			
 		}
 		
 		return true;

@@ -6,17 +6,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import me.iran.factions.Factions;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
+import me.iran.factions.system.SystemFactionManager;
 
 public class PlaceItemsInClaim implements Listener {
-
-	Factions plugin;
-	
-	public PlaceItemsInClaim (Factions plugin) {
-		this.plugin = plugin;
-	}
 	
 	@EventHandler
 	public void onPlace(BlockPlaceEvent event) {
@@ -25,7 +19,6 @@ public class PlaceItemsInClaim implements Listener {
 		if(FactionManager.getManager().insideClaim(event.getBlock().getLocation())) {
 			
 			Faction blockFac = FactionManager.getManager().getClaimByLocation(event.getBlock().getLocation());
-			
 
 			if(FactionManager.getManager().isPlayerInFaction(player)) {
 				Faction faction = FactionManager.getManager().getFactionByPlayer(player);
@@ -34,11 +27,16 @@ public class PlaceItemsInClaim implements Listener {
 					event.setCancelled(true);
 					player.sendMessage(ChatColor.RED + "Can't place blocks in the territory of " + ChatColor.LIGHT_PURPLE + blockFac.getName());
 				}
-				
 			} else {
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.RED + "Can't place blocks in the territory of " + ChatColor.LIGHT_PURPLE + blockFac.getName());
 			}
+		}
+		
+		if(SystemFactionManager.getManager().isInsideClaim(player.getLocation())) {
+			
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.RED + "Can't place blocks in the territory of " + ChatColor.LIGHT_PURPLE + SystemFactionManager.getManager().getFactionByLocation(player.getLocation()).getName());
 			
 		}
 	}

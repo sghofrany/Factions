@@ -14,11 +14,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class InteractWithItemsInClaim implements Listener {
-	Factions plugin;
-
-	public InteractWithItemsInClaim(Factions plugin) {
-		this.plugin = plugin;
-	}
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {

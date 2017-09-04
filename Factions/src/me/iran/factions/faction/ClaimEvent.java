@@ -21,14 +21,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ClaimEvent implements Listener {
 
-	Factions plugin;
-	
 	private static HashMap<String, Claim> claiming = new HashMap<>();
 	private static ArrayList<String> map = new ArrayList<>();
-	
-	public ClaimEvent (Factions plugin) {
-		this.plugin = plugin;
-	}
 	
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {

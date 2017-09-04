@@ -24,17 +24,11 @@ import net.milkbowl.vault.economy.EconomyResponse;
 
 public class FactionCommands implements CommandExecutor {
 
-	Factions plugin;
-	
 	private static HashMap<String, Integer> home = new HashMap<String, Integer>();
 	
 	private static ArrayList<String> chat = new ArrayList<>();
 	
-	public FactionCommands(Factions plugin) {
-		this.plugin = plugin;
-	}
-	
-	ClaimEvent claimEvent = new ClaimEvent(plugin);
+	private ClaimEvent claimEvent = new ClaimEvent();
 	
 	@SuppressWarnings("deprecation")
 	@Override

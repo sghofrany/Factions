@@ -1,6 +1,5 @@
 package me.iran.factions.listeners;
 
-import me.iran.factions.Factions;
 import me.iran.factions.faction.cmd.FactionCommands;
 
 import org.bukkit.ChatColor;
@@ -10,14 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class MoveWhileTeleporting implements Listener {
-
-	Factions plugin;
 	
-	public MoveWhileTeleporting(Factions plugin) {
-		this.plugin = plugin;
-	}
-	
-	FactionCommands cmd = new FactionCommands(plugin);
+	private FactionCommands cmd = new FactionCommands();
 	
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {

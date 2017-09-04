@@ -8,19 +8,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import me.iran.factions.Factions;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
 import me.iran.factions.faction.cmd.FactionCommands;
 
 public class FactionChat implements Listener {
 
-	Factions plugin;
-	
-	public FactionChat(Factions plugin) {
-		this.plugin = plugin;
-	}
-	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
 		Player player = event.getPlayer();

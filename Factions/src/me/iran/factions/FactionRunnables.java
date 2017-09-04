@@ -18,8 +18,8 @@ public class FactionRunnables extends BukkitRunnable {
 		this.plugin = plugin;
 	}
 	
-	ClaimEvent claimEvent = new ClaimEvent(plugin);
-	FactionCommands cmd = new FactionCommands(plugin);
+	private ClaimEvent claimEvent = new ClaimEvent();
+	private FactionCommands cmd = new FactionCommands();
 	
 	@SuppressWarnings("deprecation")
 	public void run() {

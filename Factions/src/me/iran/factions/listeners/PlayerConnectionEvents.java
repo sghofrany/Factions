@@ -1,11 +1,10 @@
 package me.iran.factions.listeners;
 
-import me.iran.factions.Factions;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
-import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,12 +12,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerConnectionEvents implements Listener {
-
-	Factions plugin;
-	
-	public PlayerConnectionEvents (Factions plugin) {
-		this.plugin = plugin;
-	}
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler

@@ -1,7 +1,6 @@
 package me.iran.factions.listeners;
 
 import java.util.HashMap;
-import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -54,7 +53,6 @@ public class PvPTimer implements Listener {
 					.replace("%timer%", Factions.getInstance().getConfig().getInt("pvp-timer") + "").replace("%player%", hit.getName())));
 
 		}
-		
 	}
 	
 	public HashMap<String, Integer> getTimer() {
