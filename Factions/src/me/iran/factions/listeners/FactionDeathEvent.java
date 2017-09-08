@@ -26,10 +26,6 @@ public class FactionDeathEvent implements Listener {
 			
 			faction.setDtr(faction.getDtr() - 1.0);
 			
-			if(faction.getDtr() < 0) {
-				faction.setRaidable(true);
-			}
-			
 			faction.setFreezeTime(10);
 			faction.setFrozen(true);
 			

@@ -20,7 +20,6 @@ public class Faction {
 	
 	private boolean frozen;
 	private boolean regen;
-	private boolean raidable;
 	
 	private int freezeTime;
 	private int balance;
@@ -44,7 +43,6 @@ public class Faction {
 		
 		frozen = false;
 		regen = true;
-		raidable = false;
 		
 		freezeTime = 0;
 		balance = 0;
@@ -174,11 +172,9 @@ public class Faction {
 	}
 	
 	public boolean isRaidable() {
-		return raidable;
-	}
-	
-	public void setRaidable(boolean raidable) {
-		this.raidable = raidable;
+		if(dtr <= 0 ) 
+			return true;
+		return false;
 	}
 	
 	/**Team Freezetime**/

@@ -72,7 +72,6 @@ public class FactionRunnables extends BukkitRunnable {
 					faction.setDtr(faction.getDtr() + 0.001);
 					
 					if(faction.getDtr() >= 0) {
-						faction.setRaidable(false);
 						for(Player p : Bukkit.getOnlinePlayers()) {
 							if(faction.getMemberList().contains(p.getUniqueId().toString())) {
 								p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "Your faction is no longer Raidable!");

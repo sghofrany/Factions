@@ -79,7 +79,6 @@ public class FactionManager {
 					
 					boolean regen = fac.getBoolean("factions." + f + ".regen");
 					boolean frozen = fac.getBoolean("factions." + f + ".frozen");
-					boolean raidable = fac.getBoolean("factions." + f + ".raidable");
 					
 					Faction faction = new Faction(leader, facName);
 					
@@ -123,7 +122,6 @@ public class FactionManager {
 					faction.setMotd(motd);
 					faction.setRegen(regen);
 					faction.setFrozen(frozen);
-					faction.setRaidable(raidable);
 					faction.setFreezeTime(freezeTime);
 
 					
@@ -189,7 +187,6 @@ public class FactionManager {
 
 					facConfig.createSection("factions." + name + ".regen");
 					facConfig.createSection("factions." + name + ".frozen");
-					facConfig.createSection("factions." + name + ".raidable");
 
 					facConfig.set("factions." + name + ".name", faction.getName());
 					facConfig.set("factions." + name + ".leader", faction.getLeader());
@@ -239,7 +236,6 @@ public class FactionManager {
 
 					facConfig.set("factions." + name + ".regen", faction.isRegen());
 					facConfig.set("factions." + name + ".frozen", faction.isFrozen());
-					facConfig.set("factions." + name + ".raidable", faction.isRaidable());
 
 					try {
 						facConfig.save(file);
@@ -295,7 +291,6 @@ public class FactionManager {
 
 					facConfig.set("factions." + name + ".regen", faction.isRegen());
 					facConfig.set("factions." + name + ".frozen", faction.isFrozen());
-					facConfig.set("factions." + name + ".raidable", faction.isRaidable());
 
 					try {
 						facConfig.save(file);
@@ -304,13 +299,10 @@ public class FactionManager {
 					}
 				}
 
-				// Avoid memory leaks
 				faction.getInvitesList().clear();
 
 			}
 
-			// clear current list
-			
 		}
 	}
 

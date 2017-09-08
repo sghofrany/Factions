@@ -55,10 +55,6 @@ public class FactionAdminCommands implements CommandExecutor {
 						Faction faction = FactionManager.getManager().getFactionByName(args[1]);
 						
 						double d = Double.parseDouble(args[2]);
-						
-						if(d < 0) {
-							faction.setRaidable(true);
-						}
 
 						faction.setDtr(d);
 						
