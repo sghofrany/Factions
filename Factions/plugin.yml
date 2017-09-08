@@ -1,6 +1,7 @@
 name: Factions
 main: me.iran.factions.Factions
 version: 1.0
+author: Irantwomiles
 softdepend: [Vault]
 commands:
   faction:
