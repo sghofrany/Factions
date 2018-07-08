@@ -1,19 +1,19 @@
 package me.iran.factions.listeners;
 
-import me.iran.factions.faction.Faction;
-import me.iran.factions.faction.FactionManager;
-
 import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+
+import me.iran.factions.faction.Faction;
+import me.iran.factions.faction.FactionManager;
+import me.iran.factions.system.SystemFactionManager;
 
 public class BlockChangeInClaim implements Listener {
 
@@ -39,6 +39,11 @@ public class BlockChangeInClaim implements Listener {
 				player.sendMessage(ChatColor.RED + "Can't break in the territory of " + ChatColor.LIGHT_PURPLE + blockFac.getName());
 			}
 		}
+		
+		if(SystemFactionManager.getManager().isInsideClaim(event.getBlock().getLocation())) {
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.RED + "Can't break in the territory of " + ChatColor.LIGHT_PURPLE + SystemFactionManager.getManager().getFactionByLocation(event.getBlock().getLocation()).getName());
+		}
 	}
 	
 	@EventHandler
@@ -47,13 +52,17 @@ public class BlockChangeInClaim implements Listener {
 		List<Block> destroyed = event.blockList();
         
 		Iterator<Block> it = destroyed.iterator();
-        
-		if (event.getEntity() instanceof TNTPrimed) {
-			while (it.hasNext()) {
-				Block block = it.next();
-				if (FactionManager.getManager().insideClaim(block.getLocation()))
-					it.remove();
-			}
+   
+		while (it.hasNext()) {
+			Block block = it.next();
+			if (FactionManager.getManager().insideClaim(block.getLocation()))
+				it.remove();
+		}
+		
+		while (it.hasNext()) {
+			Block block = it.next();
+			if (SystemFactionManager.getManager().isInsideClaim(block.getLocation()))
+				it.remove();
 		}
 
 	}

@@ -287,7 +287,9 @@ public class SystemFactionManager {
 
 				if ((loc.getBlockX() >= xMin) && (loc.getBlockX() <= xMax)) {
 					if ((loc.getBlockZ() >= zMin) && (loc.getBlockZ() <= zMax)) {
-						return true;
+						if(loc.getWorld().getName().equalsIgnoreCase(faction.getLoc1().getWorld().getName())) {
+							return true;
+						}
 					}
 				}
 			}
@@ -311,7 +313,9 @@ public class SystemFactionManager {
 
 				if ((loc.getBlockX() >= xMin) && (loc.getBlockX() <= xMax)) {
 					if ((loc.getBlockZ() >= zMin) && (loc.getBlockZ() <= zMax)) {
-						return faction;
+						if(loc.getWorld().getName().equalsIgnoreCase(faction.getLoc1().getWorld().getName())) {
+							return faction;
+						}
 					}
 				}
 			}

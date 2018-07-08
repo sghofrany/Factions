@@ -3,8 +3,15 @@ package me.iran.factions.faction;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Faction {
 
 	private String name;
@@ -51,7 +58,18 @@ public class Faction {
 		
 	}
 	
-	/**Team name**/
+	public void sendMessage(String msg) {
+		for(Player p : Bukkit.getOnlinePlayers()) {
+			if(members.contains(p.getUniqueId().toString())) {
+				p.sendMessage(msg);
+			}
+		}
+	}
+	
+	public List<String> getCaptainList() {
+		return captains;
+	}
+	
 	
 	public void setName(String name) {
 		this.name = name;
@@ -86,10 +104,7 @@ public class Faction {
 	public void setCaptainList(List<String> captains) {
 		this.captains = captains;
 	}
-	
-	public List<String> getCaptainList() {
-		return captains;
-	}
+
 	
 	public void addCaptain(String name) {
 		captains.add(name);

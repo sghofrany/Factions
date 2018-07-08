@@ -24,6 +24,7 @@ import me.iran.factions.listeners.PvPTimer;
 import me.iran.factions.system.SystemClaimEvent;
 import me.iran.factions.system.SystemFactionCommands;
 import me.iran.factions.system.SystemFactionManager;
+import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
 
 public class Factions extends JavaPlugin {
@@ -43,7 +44,7 @@ public class Factions extends JavaPlugin {
 		instance = this;
 
 		if(!setupEconomy()) {
-			System.out.println("Couldn't Hook into Economy Plugin, Disabling Factions");
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[Log] Could not find a Economy plugin, disabling Factions!");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -89,13 +90,15 @@ public class Factions extends JavaPlugin {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("[Factions] Created the directory 'Factions' with no errors!");
+			
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[Log] Created the directory 'Factions' successfully!");
+	
 		}
 
 		file = new File(this.getDataFolder() + "/SysFactions");
 
 		if (!file.exists()) {
-			System.out.println("[Factions] Couldn't Find any factions");
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[Log] Could not find any factions!");
 			file.mkdir();
 			file = new File(this.getDataFolder() + "/SysFactions", "deleteme.yml");
 			new YamlConfiguration();
@@ -110,7 +113,7 @@ public class Factions extends JavaPlugin {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("[Factions] Created the directory 'Factions' with no errors!");
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[Log] Created the directory 'Factions' successfully!");
 		}
 		
 		file = new File(this.getDataFolder(), "factions.yml");

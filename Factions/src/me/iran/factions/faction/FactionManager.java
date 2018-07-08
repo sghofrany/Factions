@@ -83,14 +83,19 @@ public class FactionManager {
 					Faction faction = new Faction(leader, facName);
 					
 					if(fac.contains("factions." + f + ".loc1") && fac.contains("factions." + f + ".loc2")) {
+						
 						int x1 = fac.getInt("factions." + f + ".loc1.x");
 						int z1 = fac.getInt("factions." + f + ".loc1.z");
+						
+						String world1 = fac.getString("factions." + f + ".loc1.world");
 						
 						int x2 = fac.getInt("factions." + f + ".loc2.x");
 						int z2 = fac.getInt("factions." + f + ".loc2.z");
 						
-						Location loc1 = new Location(Bukkit.getWorld("world"), x1, 0, z1);
-						Location loc2 = new Location(Bukkit.getWorld("world"), x2, 0, z2);
+						String world2 = fac.getString("factions." + f + ".loc2.world");
+						
+						Location loc1 = new Location(Bukkit.getWorld(world1), x1, 0, z1);
+						Location loc2 = new Location(Bukkit.getWorld(world2), x2, 0, z2);
 					
 						faction.setLoc1(loc1);
 						faction.setLoc2(loc2);
@@ -104,7 +109,9 @@ public class FactionManager {
 						float pitch = fac.getFloat("factions." + f + ".home.pitch");
 						float yaw = fac.getFloat("factions." + f + ".home.yaw");
 					
-						Location home = new Location(Bukkit.getWorld("world"), x, y, z);
+						String world = fac.getString("factions." + f + ".home.world");
+						
+						Location home = new Location(Bukkit.getWorld(world), x, y, z);
 						
 						home.setPitch(pitch);
 						home.setYaw(yaw);
@@ -199,32 +206,39 @@ public class FactionManager {
 					if (faction.getLoc1() != null) {
 						facConfig.createSection("factions." + name + ".loc1.x");
 						facConfig.createSection("factions." + name + ".loc1.z");
-
+						facConfig.createSection("factions." + name + ".loc1.world");
+						
 						facConfig.set("factions." + name + ".loc1.x", faction.getLoc1().getBlockX());
 						facConfig.set("factions." + name + ".loc1.z", faction.getLoc1().getBlockZ());
+						facConfig.set("factions." + name + ".loc1.world", faction.getLoc1().getWorld().getName());
 					}
 
 					if (faction.getLoc2() != null) {
 						facConfig.createSection("factions." + name + ".loc2.x");
 						facConfig.createSection("factions." + name + ".loc2.z");
-
+						facConfig.createSection("factions." + name + ".loc2.world");
+						
 						facConfig.set("factions." + name + ".loc2.x", faction.getLoc2().getBlockX());
 						facConfig.set("factions." + name + ".loc2.z", faction.getLoc2().getBlockZ());
+						facConfig.set("factions." + name + ".loc2.world", faction.getLoc2().getWorld().getName());
 					}
 
 					if (faction.getHome() != null) {
+						
 						facConfig.createSection("factions." + name + ".home.x");
 						facConfig.createSection("factions." + name + ".home.y");
 						facConfig.createSection("factions." + name + ".home.z");
 						facConfig.createSection("factions." + name + ".home.pitch");
 						facConfig.createSection("factions." + name + ".home.yaw");
-
+						facConfig.createSection("factions." + name + ".home.wolrd");
+						
 						facConfig.set("factions." + name + ".home.x", faction.getHome().getBlockX());
 						facConfig.set("factions." + name + ".home.y", faction.getHome().getBlockY());
 						facConfig.set("factions." + name + ".home.z", faction.getHome().getBlockZ());
 						facConfig.set("factions." + name + ".home.pitch", faction.getHome().getPitch());
 						facConfig.set("factions." + name + ".home.yaw", faction.getHome().getYaw());
-
+						facConfig.set("factions." + name + ".home.world", faction.getHome().getWorld().getName());
+						
 					}
 
 					facConfig.set("factions." + name + ".balance", faction.getBalance());
@@ -259,6 +273,7 @@ public class FactionManager {
 					if (faction.getLoc1() != null) {
 						facConfig.set("factions." + name + ".loc1.x", faction.getLoc1().getBlockX());
 						facConfig.set("factions." + name + ".loc1.z", faction.getLoc1().getBlockZ());
+						facConfig.set("factions." + name + ".loc1.world", faction.getLoc1().getWorld().getName());
 					} else {
 						facConfig.set("factions." + name + ".loc1", null);
 					}
@@ -266,6 +281,7 @@ public class FactionManager {
 					if (faction.getLoc2() != null) {
 						facConfig.set("factions." + name + ".loc2.x", faction.getLoc2().getBlockX());
 						facConfig.set("factions." + name + ".loc2.z", faction.getLoc2().getBlockZ());
+						facConfig.set("factions." + name + ".loc2.world", faction.getLoc2().getWorld().getName());
 					} else {
 						facConfig.set("factions." + name + ".loc2", null);
 					}
@@ -277,7 +293,7 @@ public class FactionManager {
 
 						facConfig.set("factions." + name + ".home.pitch", faction.getHome().getPitch());
 						facConfig.set("factions." + name + ".home.yaw", faction.getHome().getYaw());
-
+						facConfig.set("factions." + name + ".home.world", faction.getHome().getWorld().getName());
 					} else {
 						facConfig.set("factions." + name + ".home", null);
 					}
@@ -960,13 +976,14 @@ public class FactionManager {
 	}
 	
 	public boolean insideClaim(Location loc) {
+		
 		for(Faction faction : factions) {
 			
 			if(faction.getLoc1() != null && faction.getLoc2() != null) {
+				
 				Location loc1 = faction.getLoc1();
 				Location loc2 = faction.getLoc2();
 				
-
 				int xMax = Math.max(loc1.getBlockX(), loc2.getBlockX());
 				int zMax = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
 
@@ -975,7 +992,9 @@ public class FactionManager {
 
 				if ((loc.getBlockX() >= xMin) && (loc.getBlockX() <= xMax)) {
 					if ((loc.getBlockZ() >= zMin) && (loc.getBlockZ() <= zMax)) {
-						return true;
+						if(loc.getWorld().getName().equalsIgnoreCase(faction.getLoc1().getWorld().getName())) {
+							return true;
+						}
 					}
 				}
 			}
@@ -985,9 +1004,11 @@ public class FactionManager {
 	}
 	
 	public Faction getClaimByLocation(Location loc) {
+		
 		for(Faction faction : factions) {
 			
 			if(faction.getLoc1() != null && faction.getLoc2() != null) {
+				
 				Location loc1 = faction.getLoc1();
 				Location loc2 = faction.getLoc2();
 				
@@ -1000,7 +1021,9 @@ public class FactionManager {
 
 				if ((loc.getBlockX() >= xMin) && (loc.getBlockX() <= xMax)) {
 					if ((loc.getBlockZ() >= zMin) && (loc.getBlockZ() <= zMax)) {
-						return faction;
+						if(loc.getWorld().getName().equalsIgnoreCase(faction.getLoc1().getWorld().getName())) {
+							return faction;
+						}
 					}
 				}
 			}

@@ -30,7 +30,7 @@ public class FactionChat implements Listener {
 				
 				for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 					
-					if(faction.getMemberList().contains(p.getUniqueId().toString())) {
+					if(faction.getMembers().contains(p.getUniqueId().toString())) {
 						p.sendMessage(ChatColor.DARK_AQUA + "[" + faction.getName() + "] " + player.getName() + ": " + ChatColor.YELLOW + msg);
 					}
 					

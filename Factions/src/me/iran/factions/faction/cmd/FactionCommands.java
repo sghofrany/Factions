@@ -274,6 +274,28 @@ public class FactionCommands implements CommandExecutor {
 				player.sendMessage(ChatColor.GREEN + "You are now in Claiming mode, please follow the instructions on the Claiming Wand!");
 			}
 			
+			if(args[0].equalsIgnoreCase("unclaim")) {
+				
+				if(!FactionManager.getManager().isPlayerInFaction(player)) {
+					player.sendMessage(ChatColor.RED + "Must be in a faction to claim land! /f create [name]");
+					return true;
+				}
+				
+				Faction faction = FactionManager.getManager().getFactionByPlayer(player);
+				
+				if(!faction.getCaptainList().contains(player.getUniqueId().toString()) && !faction.getLeader().equalsIgnoreCase(player.getUniqueId().toString())) {
+					player.sendMessage(ChatColor.RED + "Only Captains and Leaders can unclaim land");
+					return true;
+				}
+				
+				faction.setHome(null);
+				faction.setLoc1(null);
+				faction.setLoc2(null);
+				
+				faction.sendMessage(ChatColor.RED + player.getName() + ChatColor.YELLOW + " has unclaimed your factions land!");
+				
+			}
+			
 			if(args[0].equalsIgnoreCase("map")) {
 				if(ClaimEvent.getMap().contains(player.getName())) {
 					claimEvent.removeFactionMap(player);
