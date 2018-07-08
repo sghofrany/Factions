@@ -43,36 +43,7 @@ public class FactionCommands implements CommandExecutor {
 		if(cmd.getName().equalsIgnoreCase("faction")) {
 			
 			if(args.length < 1) {
-				
-				player.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "--------------------------------------------------");
-				player.sendMessage(ChatColor.GOLD.toString() + ChatColor.STRIKETHROUGH + "-= " + ChatColor.GOLD + "Team Commands" + ChatColor.GOLD.toString() + ChatColor.STRIKETHROUGH + "=-");
-				player.sendMessage(ChatColor.YELLOW + "");
-				player.sendMessage(ChatColor.RED + "Team Captain Commands");
-				player.sendMessage(ChatColor.YELLOW + "/f create <name>");
-				player.sendMessage(ChatColor.YELLOW + "/f disband");
-				player.sendMessage(ChatColor.YELLOW + "/f invite <player>");
-				player.sendMessage(ChatColor.YELLOW + "/f revoke <player>");
-				player.sendMessage(ChatColor.YELLOW + "/f kick <player>");
-				player.sendMessage(ChatColor.YELLOW + "/f leader <player>");
-				player.sendMessage(ChatColor.YELLOW + "/f promote <player>");
-				player.sendMessage(ChatColor.YELLOW + "/f demote <player>");
-				player.sendMessage(ChatColor.YELLOW + "/f claim");
-				player.sendMessage(ChatColor.YELLOW + "/f withdraw <amount>");
-				player.sendMessage(ChatColor.YELLOW + "/f sethome");
-				player.sendMessage(ChatColor.YELLOW + "/f announce <message>");
-				player.sendMessage(ChatColor.YELLOW + "");
-				player.sendMessage(ChatColor.DARK_GRAY + "Team Member Commands");
-				player.sendMessage(ChatColor.GRAY + "/f join <f>");
-				player.sendMessage(ChatColor.GRAY + "/f leave");
-				player.sendMessage(ChatColor.GRAY + "/f chat");
-				player.sendMessage(ChatColor.GRAY + "/f join <f>");
-				player.sendMessage(ChatColor.GRAY + "/f who <f>");
-				player.sendMessage(ChatColor.GRAY + "/f map");
-				player.sendMessage(ChatColor.GRAY + "/f balance");
-				player.sendMessage(ChatColor.GRAY + "/f deposit <amount>");
-				player.sendMessage(ChatColor.GRAY + "/f home ");
-				player.sendMessage(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "--------------------------------------------------");
-				
+				factionHelp(player);
 				return true;
 			}
 			
@@ -509,4 +480,44 @@ public class FactionCommands implements CommandExecutor {
 		return chat;
 	}
 	
+	private void factionHelp(Player player) {
+		
+		String message = "";
+		
+		message = message + ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------------------------------------" + "\n";
+		
+		message = message  + ChatColor.BLUE + "Faction Help   " + leaderTag() + ChatColor.GRAY + " Leader " + captainTag() + ChatColor.GRAY + " Captain" + "\n";
+		message = message + ChatColor.GRAY + "  /f create" + ChatColor.YELLOW + " - Create a faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f join" + ChatColor.YELLOW + " - Accept a faction invitation." + "\n";
+		message = message + ChatColor.GRAY + "  /f leave" + ChatColor.YELLOW + " - Leave your faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f chat" + ChatColor.YELLOW + " - Switch between public and faction chat." + "\n";
+		message = message + ChatColor.GRAY + "  /f show" + ChatColor.YELLOW + " - View faction information." + "\n";
+		message = message + ChatColor.GRAY + "  /f map" + ChatColor.YELLOW + " - Pillars that indicate faction claims." + "\n";
+		message = message + ChatColor.GRAY + "  /f balance" + ChatColor.YELLOW + " - View your factions balance." + "\n";
+		message = message + ChatColor.GRAY + "  /f home" + ChatColor.YELLOW + " - Teleport to your factions home." + "\n";
+		message = message + ChatColor.GRAY + "  /f deposit" + ChatColor.YELLOW + " - Deposit your money into the faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f invite " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Invite a member to your faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f uninvite " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Remove a players invitation to your faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f kick " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Kick a member from the faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f claim " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Claim land for your faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f kick " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Kick a member from the faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f withdraw " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Withdraw money for the factions balance." + "\n";
+		message = message + ChatColor.GRAY + "  /f sethome " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Set your factions home location." + "\n";
+		message = message + ChatColor.GRAY + "  /f announce " + leaderTag() + captainTag() + ChatColor.YELLOW + " - Announce a message to everyone in your faction." + "\n";
+		message = message + ChatColor.GRAY + "  /f disband " + leaderTag() + ChatColor.YELLOW + " - Disband your faction, this can NOT be un-done." + "\n";
+		message = message + ChatColor.GRAY + "  /f promote " + leaderTag() + ChatColor.YELLOW + " - Promote a member to the captain role." + "\n";
+		message = message + ChatColor.GRAY + "  /f demote " + leaderTag() + ChatColor.YELLOW + " - Demote a captain to the member role." + "\n";
+		message = message + ChatColor.GRAY + "  /f leader " + leaderTag() + ChatColor.YELLOW + " - Make someone else in the faction the leader." + "\n";
+		message = message + ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------------------------------------" + "\n";
+		
+		player.sendMessage(message);
+	}
+	
+	private String leaderTag() {
+		return ChatColor.GRAY + "[" + ChatColor.AQUA + "L" + ChatColor.GRAY + "]";
+	}
+	
+	private String captainTag() {
+		return ChatColor.GRAY + "[" + ChatColor.RED + "C" + ChatColor.GRAY + "]";
+	}
 }

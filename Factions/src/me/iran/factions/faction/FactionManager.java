@@ -1140,7 +1140,7 @@ public class FactionManager {
 
 					if (faction.getMemberList().contains(p.getUniqueId().toString())) {
 
-						p.sendMessage(ChatColor.YELLOW + "[Update] " + ChatColor.LIGHT_PURPLE + msg);
+						p.sendMessage(ChatColor.YELLOW + "[Announcement] " + ChatColor.LIGHT_PURPLE + msg);
 
 					}
 				}
