@@ -58,11 +58,21 @@ public class BlockChangeInClaim implements Listener {
 			if (FactionManager.getManager().insideClaim(block.getLocation()))
 				it.remove();
 		}
-		
+	
+	}
+
+	@EventHandler
+	public void sysExplode(EntityExplodeEvent event) {
+
+		List<Block> destroyed = event.blockList();
+
+		Iterator<Block> it = destroyed.iterator();
+
 		while (it.hasNext()) {
 			Block block = it.next();
-			if (SystemFactionManager.getManager().isInsideClaim(block.getLocation()))
+			if (SystemFactionManager.getManager().isInsideClaim(block.getLocation())) {
 				it.remove();
+			}
 		}
 
 	}

@@ -381,7 +381,7 @@ public class FactionManager {
 			faction.getCaptainList().clear();
 			factions.remove(faction);
 			
-			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("faction-disbanded")));
+			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', Factions.getInstance().getConfig().getString("faction-disbanded").replace("%faction%", faction.getName())));
 		} else {
 			player.sendMessage(ChatColor.RED + "This command is only for team Leaders");
 		}
@@ -782,7 +782,7 @@ public class FactionManager {
 
 		player.sendMessage(ChatColor.GRAY + "Members: " + onlinePlayers + offlinePlayers);
 		
-		DecimalFormat f = new DecimalFormat("##.00");
+		DecimalFormat f = new DecimalFormat("#0.00");
 		
 		if(faction.getDtr() > 0) {
 			player.sendMessage(ChatColor.BLUE + "DTR: " + ChatColor.GREEN + f.format(faction.getDtr()));
@@ -882,7 +882,7 @@ public class FactionManager {
 
 		player.sendMessage(ChatColor.GRAY + "Members: " + onlinePlayers + offlinePlayers);
 		
-		DecimalFormat f = new DecimalFormat("##.00");
+		DecimalFormat f = new DecimalFormat("#0.00");
 		
 		if(faction.getDtr() > 0) {
 			player.sendMessage(ChatColor.BLUE + "DTR: " + ChatColor.GREEN + f.format(faction.getDtr()));

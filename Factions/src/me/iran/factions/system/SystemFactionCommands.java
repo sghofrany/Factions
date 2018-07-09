@@ -30,6 +30,8 @@ public class SystemFactionCommands implements CommandExecutor {
 			if(args.length < 1) {
 				player.sendMessage(ChatColor.RED + "/systemfaction create <name>");
 				player.sendMessage(ChatColor.RED + "/systemfaction claim <name>");
+				player.sendMessage(ChatColor.RED + "/systemfaction unclaim <name>");
+				player.sendMessage(ChatColor.RED + "/systemfaction sethome <name>");
 				player.sendMessage(ChatColor.RED + "/systemfaction deathban <name>");
 				return true;
 			}
@@ -94,6 +96,50 @@ public class SystemFactionCommands implements CommandExecutor {
 				
 				player.getInventory().addItem(wand);
 				player.sendMessage(ChatColor.RED + "Now claiming for " + args[1]);
+			}
+			
+			if(args[0].equalsIgnoreCase("unclaim")) {
+				
+				if(args.length < 2) {
+					player.sendMessage(ChatColor.RED + "/systemfaction unclaim <name>");
+					return true;
+				}
+				
+				if(!SystemFactionManager.getManager().doesFactionExist(args[1])) {
+					player.sendMessage(ChatColor.RED + "Couldn't find that faction");
+					return true;
+				}
+				
+				SystemFaction faction = SystemFactionManager.getManager().getFactionByName(args[1]);
+				
+				faction.setLoc1(null);
+				faction.setLoc2(null);
+				faction.setHome(null);
+				
+				player.sendMessage(ChatColor.RED + "You have unclaimed the land of " + faction.getName());
+			}
+			
+			if(args[0].equalsIgnoreCase("sethome")) {
+				
+				if(args.length < 2) {
+					player.sendMessage(ChatColor.RED + "/systemfaction sethome <name>");
+					return true;
+				}
+				
+				if(!SystemFactionManager.getManager().doesFactionExist(args[1])) {
+					player.sendMessage(ChatColor.RED + "Couldn't find that faction");
+					return true;
+				}
+				
+				SystemFaction faction = SystemFactionManager.getManager().getFactionByName(args[1]);
+				
+				if(SystemFactionManager.getManager().isInsideClaim(player.getLocation()) && faction.getName().equalsIgnoreCase(SystemFactionManager.getManager().getFactionByLocation(player.getLocation()).getName())) {
+					faction.setHome(player.getLocation());
+				} else {
+					player.sendMessage(ChatColor.RED + "You must be standing inside the claim of " + ChatColor.YELLOW + faction.getName() + ChatColor.RED + " to set home!");
+				}
+				
+				player.sendMessage(ChatColor.YELLOW + "Set home for System Faction " + ChatColor.RED + faction.getName());
 			}
 		}
 		

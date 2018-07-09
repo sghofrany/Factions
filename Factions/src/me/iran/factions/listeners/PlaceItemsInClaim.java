@@ -14,6 +14,7 @@ public class PlaceItemsInClaim implements Listener {
 	
 	@EventHandler
 	public void onPlace(BlockPlaceEvent event) {
+		
 		Player player = event.getPlayer();
 		
 		if(FactionManager.getManager().insideClaim(event.getBlock().getLocation())) {
@@ -31,12 +32,14 @@ public class PlaceItemsInClaim implements Listener {
 				event.setCancelled(true);
 				player.sendMessage(ChatColor.RED + "Can't place blocks in the territory of " + ChatColor.LIGHT_PURPLE + blockFac.getName());
 			}
+			
+			return;
 		}
 		
-		if(SystemFactionManager.getManager().isInsideClaim(player.getLocation())) {
+		if(SystemFactionManager.getManager().isInsideClaim(event.getBlock().getLocation())) {
 			
 			event.setCancelled(true);
-			player.sendMessage(ChatColor.RED + "Can't place blocks in the territory of " + ChatColor.LIGHT_PURPLE + SystemFactionManager.getManager().getFactionByLocation(player.getLocation()).getName());
+			player.sendMessage(ChatColor.RED + "Can't place blocks in the territory of " + ChatColor.LIGHT_PURPLE + SystemFactionManager.getManager().getFactionByLocation(event.getBlock().getLocation()).getName());
 			
 		}
 	}

@@ -269,6 +269,8 @@ public class SystemFactionManager {
 		
 		factions.add(faction);
 		
+		player.sendMessage(ChatColor.GREEN + "You have just created the System Faction " + name);
+		
 	}
 	
 	public boolean isInsideClaim(Location loc) {
@@ -340,6 +342,35 @@ public class SystemFactionManager {
 			}
 		}
 		return false;
+	}
+	
+	public void factionInfo(Player player, SystemFaction faction) {
+		
+		
+		System.out.println("ran");
+		
+		ArrayList<String> message = new ArrayList<>();
+		
+		message.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "--------------------------------------------------");
+		message.add(ChatColor.GOLD.toString() + ChatColor.BOLD + faction.getName());
+		
+		if(faction.isDeathban()) {
+			message.add(ChatColor.YELLOW + "Deathban: " + ChatColor.GRAY + "true");
+		} else {
+			message.add(ChatColor.YELLOW + "Deathban: " + ChatColor.GRAY + "false");
+		}
+		
+		if(faction.getHome() != null) {
+			message.add(ChatColor.YELLOW + "Location: " + ChatColor.WHITE + + faction.getHome().getBlockX() + ", " + faction.getHome().getBlockZ());
+		} else {
+			message.add(ChatColor.YELLOW + "Location: " + ChatColor.RED + "Not Set");
+		}
+		
+		message.add(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "--------------------------------------------------");
+		
+		for(String str : message) {
+			player.sendMessage(str);
+		}
 	}
 	
 	public ArrayList<SystemFaction> getAllFactions() {

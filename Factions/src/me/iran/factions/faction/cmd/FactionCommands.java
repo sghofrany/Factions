@@ -20,6 +20,8 @@ import me.iran.factions.faction.Claim;
 import me.iran.factions.faction.ClaimEvent;
 import me.iran.factions.faction.Faction;
 import me.iran.factions.faction.FactionManager;
+import me.iran.factions.system.SystemFaction;
+import me.iran.factions.system.SystemFactionManager;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 public class FactionCommands implements CommandExecutor {
@@ -281,7 +283,8 @@ public class FactionCommands implements CommandExecutor {
 				}
 			}
 			
-			if(args[0].equalsIgnoreCase("who") || args[0].equalsIgnoreCase("info")) {
+			if(args[0].equalsIgnoreCase("who") || args[0].equalsIgnoreCase("show")) {
+				
 				if(args.length < 2) {
 					
 					if(FactionManager.getManager().isPlayerInFaction(player)) {
@@ -299,17 +302,24 @@ public class FactionCommands implements CommandExecutor {
 				
 				OfflinePlayer pl = Bukkit.getOfflinePlayer(args[1]);
 				
+				SystemFaction sysfac = SystemFactionManager.getManager().getFactionByName(args[1]);
+				
 				if(pl != null) {
 					
 					if(FactionManager.getManager().isPlayerInFaction(pl)) {
 						FactionManager.getManager().factionInfoByName(player, FactionManager.getManager().getFactionByPlayer(pl).getName());
 					}
-					
+				}
+			
+				
+				if(faction != null) {
+					FactionManager.getManager().factionInfo(player, faction.getName());
 				}
 				
-				if(FactionManager.getManager().getAllFactions().contains(faction)) {
-					FactionManager.getManager().factionInfoByName(player, faction.getName());
-				} 
+				
+				if(sysfac != null) {
+					SystemFactionManager.getManager().factionInfo(player, sysfac);
+				}
 				
 				
 			}

@@ -56,11 +56,11 @@ public class SystemClaimEvent implements Listener {
 				if(claim.getLoc1() != null && claim.getLoc2() != null) {
 					claim.getFaction().setLoc1(claim.getLoc1());
 					claim.getFaction().setLoc2(claim.getLoc2());
-					player.sendMessage(ChatColor.GREEN + "Set location one for " + claim.getFaction().getName() + "'s claim");
+					player.sendMessage(ChatColor.GREEN + "You have claimed land for the system faction " + ChatColor.BLUE + claim.getFaction().getName());
 					SystemFactionCommands.getClaiming().remove(player.getName());
 					player.setItemInHand(null);
 				} else {
-					player.sendMessage(ChatColor.RED + "You have not selected two locations");
+					player.sendMessage(ChatColor.RED + " have not selected two locations");
 				}
 				
 			}
