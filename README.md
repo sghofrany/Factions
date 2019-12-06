@@ -38,4 +38,26 @@ That will give you a list of all of the available methods.
 
 I will update this as I add more functionalities.
 
+### New claiming system coming soon
 
+Store every chunk that claim contains
+
+```
+HashMap<Chunk, Claim> claimChunks
+```
+## Different Scenarios
+
+# Scenario 1
+The corner chunks that the new claim are going to be on is already part of another claim.
+* this is the most taxing of the scenarios because it involved looping through at most 256 blocks (1 chunk) but that is rare.
+First check if the chunk is already in the map, if it is then loop down or up depending on which corner you start with until you reach a claimed block.
+
+# Scenario 2
+The corner chunks that the new claim are going to on are not claimed
+
+All you have to do is loop through the chunks in between your two corner chunks. If any of the chunks are in the map, then you can't claim.
+
+# Scenario 3
+One or both corners are within a claim
+
+This is the same as scenario 1, but it should only have to loop once, because it will automatically detect that it is in the claim from the first loop.
